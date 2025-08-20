@@ -1,0 +1,57 @@
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# NuGet packages
+*.nupkg
+# The packages folder can be ignored because of restore
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.snupkg
+
+# Rider
+.idea/
+
+# Other
+*.cache
+*.log
+*.tlog
+*.tmp
+*.dbmdl
+*.bak
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# Auto-generated files
+*.generated.cs
+*.g.*
+*.AssemblyAttributes.cs
+
+# Publish
+publish/
+*.publish.xml
+*.pubxml
+*.pubxml.user
+
+
