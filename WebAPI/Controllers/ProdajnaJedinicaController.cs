@@ -10,7 +10,7 @@ public class ProdajnaJedinicaController : ControllerBase
     [HttpGet]
     public IActionResult GetProdajneJedinice()
     {
-        return new JsonResult(DTOManager.VratiSveProdajneJedinice());
+        return new JsonResult(DTOManagerProdajneJedinice.VratiSveProdajneJedinice());
     }
     
     [HttpGet]
@@ -19,7 +19,7 @@ public class ProdajnaJedinicaController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiProdajnuJedinicu(id));
+            return new JsonResult(DTOManagerProdajneJedinice.VratiProdajnuJedinicu(id));
         }
         catch (Exception ex)
         {
@@ -33,7 +33,7 @@ public class ProdajnaJedinicaController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiProdajnuJedinicuTip(id));
+            return new JsonResult(DTOManagerProdajneJedinice.VratiProdajnuJedinicuTip(id));
         }
         catch (Exception ex)
         {
@@ -46,7 +46,7 @@ public class ProdajnaJedinicaController : ControllerBase
     {
         try
         {
-            DTOManager.DodajProdajnuJedinicu(dto);
+            DTOManagerProdajneJedinice.DodajProdajnuJedinicu(dto);
         }
         catch (Exception ex)
         {
@@ -61,7 +61,7 @@ public class ProdajnaJedinicaController : ControllerBase
     {
         try
         {
-            DTOManager.IzmeniProdajnuJedinicu(dto);
+            DTOManagerProdajneJedinice.IzmeniProdajnuJedinicu(dto);
         }
         catch (Exception ex)
         {
@@ -76,7 +76,7 @@ public class ProdajnaJedinicaController : ControllerBase
     {
         try
         {
-            DTOManager.ObrisiProdajnuJedinicu(id);
+            DTOManagerProdajneJedinice.ObrisiProdajnuJedinicu(id);
         }
         catch (Exception ex)
         {

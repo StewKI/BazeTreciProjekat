@@ -13,7 +13,7 @@ public class MenadzerController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiMenadzereZaApoteku(idApoteke));
+            return new JsonResult(DTOManagerProdajneJedinice.VratiMenadzereZaApoteku(idApoteke));
         }
         catch (Exception ex)
         {
@@ -26,7 +26,7 @@ public class MenadzerController : ControllerBase
     {
         try
         {
-            DTOManager.DodajMenadzera(dto);
+            DTOManagerZaposleni.DodajMenadzera(dto);
         }
         catch (Exception ex)
         {
@@ -40,7 +40,7 @@ public class MenadzerController : ControllerBase
     {
         try
         {
-            DTOManager.UpdateMenadzera(dto);
+            DTOManagerZaposleni.UpdateMenadzera(dto);
         }
         catch (Exception ex)
         {

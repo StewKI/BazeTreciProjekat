@@ -13,7 +13,7 @@ public class ZalihaController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiZaliheApoteke(idApoteke));
+            return new JsonResult(DTOManagerIsporukeZalihe.VratiZaliheApoteke(idApoteke));
         }
         catch (Exception ex)
         {

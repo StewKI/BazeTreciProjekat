@@ -1,9 +1,8 @@
-﻿using FarmacyLibrary.Entiteti;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 
 namespace FarmacyLibrary.Mapiranja
 {
-    public class FarmaceutMap : SubclassMap<Farmaceut>
+    public class FarmaceutMap : SubclassMap<FarmacyLibrary.Entiteti.FarmaceutBasic>
     {
         public FarmaceutMap()
         {

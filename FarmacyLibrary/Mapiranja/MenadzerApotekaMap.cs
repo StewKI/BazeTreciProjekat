@@ -16,6 +16,9 @@ namespace FarmacyLibrary.Mapiranja
                 .KeyProperty(x => x.Od, "od").CustomType<DateType>();
 
             Map(x => x.Do, "do").CustomType<DateType>().Nullable();
+
+            Map(x => x.datumKontrole, "datum_kontrole").CustomType<DateType>().Nullable();
+
         }
     }
 }

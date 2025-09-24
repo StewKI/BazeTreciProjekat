@@ -8,7 +8,8 @@ namespace FarmacyLibrary.Mapiranja
         public LekMap()
         {
             Table("Lek");
-            Id(x => x.Id, "id").GeneratedBy.Identity();
+            Id(x => x.Id, "ID")
+    .GeneratedBy.Sequence("SEQ_LEK_ID");
             Map(x => x.HemijskiNaziv, "hemijski_naziv").Not.Nullable().Unique();
             Map(x => x.KomercijalniNaziv, "komercijalni_naziv").Not.Nullable();
             Map(x => x.Dejstvo, "dejstvo");

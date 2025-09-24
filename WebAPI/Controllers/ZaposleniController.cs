@@ -1,4 +1,5 @@
 using FarmacyLibrary;
+using FarmacyLibrary.Entiteti;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
@@ -12,7 +13,7 @@ public class ZaposleniController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiSveZaposlene());
+            return new JsonResult(DTOManagerZaposleni.VratiSveZaposlene());
         }
         catch (Exception ex)
         {
@@ -26,7 +27,7 @@ public class ZaposleniController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiZaposlenog(m_br));
+            return new JsonResult(DTOManagerZaposleni.VratiZaposlenog(m_br));
         }
         catch (Exception ex)
         {
@@ -39,7 +40,7 @@ public class ZaposleniController : ControllerBase
     {
         try
         {
-            DTOManager.DodajZaposlenog(dto);
+            DTOManagerZaposleni.DodajZaposlenog(dto);
         }
         catch (Exception ex)
         {
@@ -49,11 +50,11 @@ public class ZaposleniController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult ChangeZaposleni([FromBody] ZaposleniBasic dto)
+    public IActionResult ChangeZaposleni([FromBody] Zaposleni dto)
     {
         try
         {
-            DTOManager.UpdateZaposlenog(dto);
+            DTOManagerZaposleni.UpdateZaposlenog(dto);
         }
         catch (Exception ex)
         {
@@ -68,7 +69,7 @@ public class ZaposleniController : ControllerBase
     {
         try
         {
-            DTOManager.ObrisiZaposlenog(mbr);
+            DTOManagerZaposleni.ObrisiZaposlenog(mbr);
         }
         catch (Exception ex)
         {

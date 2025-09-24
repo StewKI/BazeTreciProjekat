@@ -13,7 +13,7 @@ public class SpecijalizovanaApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.DodajSpecApoteku(dto);
+            DTOManagerProdajneJedinice.DodajSpecApoteku(dto);
         }
         catch (Exception ex)
         {
@@ -27,7 +27,7 @@ public class SpecijalizovanaApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.IzmeniSpecApoetku(dto);
+            DTOManagerProdajneJedinice.IzmeniSpecApoetku(dto);
         }
         catch (Exception ex)
         {

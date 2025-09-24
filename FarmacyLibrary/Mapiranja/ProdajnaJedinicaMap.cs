@@ -1,9 +1,8 @@
-﻿using FarmacyLibrary.Entiteti;
-using FluentNHibernate.Mapping;
+﻿using FluentNHibernate.Mapping;
 
 namespace FarmacyLibrary.Mapiranja
 {
-    public class ProdajnaJedinicaMap : ClassMap<ProdajnaJedinica>
+    public class ProdajnaJedinicaMap : ClassMap<FarmacyLibrary.Entiteti.ProdajnaJedinicaBasic>
     {
         public ProdajnaJedinicaMap()
         {

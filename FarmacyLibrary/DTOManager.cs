@@ -6,7 +6,7 @@ namespace FarmacyLibrary
     public static class DTOManager
     {
         // ========== ZAPOSLENI & PODTIPOVI ==========
-
+/*
         public static void DodajFarmaceuta(FarmaceutBasic dto)
         {
             try
@@ -1163,6 +1163,6 @@ namespace FarmacyLibrary
             }
             return list;
         }
-
+*/
     }
 }

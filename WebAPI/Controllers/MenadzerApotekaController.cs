@@ -13,7 +13,7 @@ public class MenadzerApotekaController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiApotekeMenadzera(idMenadzera));
+            return new JsonResult(DTOManagerProdajneJedinice.VratiApotekeMenadzera(idMenadzera));
         }
         catch (Exception ex)
         {
@@ -26,7 +26,7 @@ public class MenadzerApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.DodeliMenadzeraApoteci(dto);
+            DTOManagerProdajneJedinice.DodeliMenadzeraApoteci(dto);
         }
         catch (Exception ex)
         {
@@ -40,7 +40,7 @@ public class MenadzerApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.IzmeniMenadzerApoteka(dto);
+            DTOManagerProdajneJedinice.IzmeniMenadzerApoteka(dto);
         }
         catch (Exception ex)
         {
@@ -55,7 +55,7 @@ public class MenadzerApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.UkloniMenadzeraSaApoteke(apoteka_id, menadzer_id);
+            DTOManagerProdajneJedinice.UkloniMenadzeraSaApoteke(apoteka_id, menadzer_id);
         }
         catch (Exception ex)
         {

@@ -9,11 +9,11 @@ namespace WebAPI.Controllers;
 public class ApotekaSaLabController : ControllerBase
 {
     [HttpPost]
-    public IActionResult AddApotekaSaLab([FromBody] ApotekaSaLab dto)
+    public IActionResult AddApotekaSaLab([FromBody] ApotekaSaLabBasic dto)
     {
         try
         {
-            DTOManager.DodajApotekuSaLab(dto);
+            DTOManagerProdajneJedinice.DodajApotekuSaLab(dto);
         }
         catch (Exception ex)
         {
@@ -23,11 +23,11 @@ public class ApotekaSaLabController : ControllerBase
     }
 
     [HttpPut]
-    public IActionResult ChangeApotekaSaLab([FromBody] ApotekaSaLab dto)
+    public IActionResult ChangeApotekaSaLab([FromBody] ApotekaSaLabBasic dto)
     {
         try
         {
-            DTOManager.IzmeniApoetkuSaLab(dto);
+            DTOManagerProdajneJedinice.IzmeniApoetkuSaLab(dto);
         }
         catch (Exception ex)
         {

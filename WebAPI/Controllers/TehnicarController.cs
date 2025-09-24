@@ -12,7 +12,7 @@ public class TehnicarController : ControllerBase
     {
         try
         {
-            DTOManager.DodajTehnicara(dto);
+            DTOManagerZaposleni.DodajTehnicara(dto);
         }
         catch (Exception ex)
         {
@@ -26,7 +26,7 @@ public class TehnicarController : ControllerBase
     {
         try
         {
-            DTOManager.UpdateTehnicara(dto);
+            DTOManagerZaposleni.UpdateTehnicara(dto);
         }
         catch (Exception ex)
         {

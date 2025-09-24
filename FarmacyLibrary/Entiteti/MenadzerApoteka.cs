@@ -2,10 +2,11 @@
 {
     public class MenadzerApoteka : IEquatable<MenadzerApoteka>
     {
-        public virtual Menadzer Menadzer { get; set; } = default!;
-        public virtual ProdajnaJedinica ProdajnaJedinica { get; set; } = default!;
+        public virtual MenadzerBasic Menadzer { get; set; } = default!;
+        public virtual ProdajnaJedinicaBasic ProdajnaJedinica { get; set; } = default!;
         public virtual DateTime Od { get; set; }   // deo PK
         public virtual DateTime? Do { get; set; }
+        public virtual DateTime? datumKontrole { get; set; }
 
         // ---- Equality za composite-id (Menadzer.MBr, ProdajnaJedinica.Id, Od) ----
         public virtual bool Equals(MenadzerApoteka? other)

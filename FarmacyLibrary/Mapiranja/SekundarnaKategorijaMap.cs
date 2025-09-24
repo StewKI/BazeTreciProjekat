@@ -8,7 +8,9 @@ namespace FarmacyLibrary.Mapiranja
         public SekundarnaKategorijaMap()
         {
             Table("Sekundarna_kategorija");
-            Id(x => x.Id, "id").GeneratedBy.Identity();
+            Id(x => x.Id)
+           .Column("id")
+           .GeneratedBy.Sequence("SEKUNDARNA_KATEGORIJA_SEQ");
             Map(x => x.Naziv, "naziv").Not.Nullable().Unique();
         }
     }

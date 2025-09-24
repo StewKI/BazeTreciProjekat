@@ -12,7 +12,7 @@ public class IsporukaController : ControllerBase
     {
         try
         {
-            DTOManager.KreirajIsporuku(dto);
+            DTOManagerIsporukeZalihe.KreirajIsporuku(dto);
         }
         catch (Exception ex)
         {

@@ -12,7 +12,7 @@ public class LekController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiSveLekove());
+            return new JsonResult(DTOManagerLek.VratiSveLekove());
         }
         catch (Exception ex)
         {
@@ -25,7 +25,7 @@ public class LekController : ControllerBase
     {
         try
         {
-            DTOManager.DodajLek(dto);
+            DTOManagerLek.DodajLek(dto);
         }
         catch (Exception ex)
         {

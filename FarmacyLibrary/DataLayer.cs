@@ -34,9 +34,7 @@ namespace FarmacyLibrary
                     .Driver<NHibernate.Driver.OracleManagedDataClientDriver>()
                     .ShowSql()
                     .ConnectionString(c =>
-                        c.Is("Data Source=//gislab-oracle.elfak.ni.ac.rs:1521/SBP_PDB;User Id=S19286;Password=S19286;Min Pool Size=1;Max Pool Size=1;")
-                    );
-
+                    c.Is("Data Source=gislab-oracle.elfak.ni.ac.rs:1521/SBP_PDB;User Id=S19286;Password=S19286"));
 
                 return Fluently.Configure()
                 .Database(cfg)
@@ -68,13 +66,10 @@ namespace FarmacyLibrary
                     depth++;
                 }
 
-                
-                Console.WriteLine($"NH init error (details): {sb.ToString()}");
                 throw; // rethrow so you can see stacktrace in Output window too
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"NH init error (raw): {ex.ToString()}");
                 throw;
             }
         }

@@ -12,7 +12,7 @@ public class OblikController : ControllerBase
     {
         try
         {
-            DTOManager.DodajOblik(dto);
+            DTOManagerLek.DodajOblik(dto);
         }
         catch (Exception ex)
         {

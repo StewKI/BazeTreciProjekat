@@ -12,7 +12,7 @@ public class PrimarnaGrupaController : ControllerBase
     {
         try
         {
-            DTOManager.DodajPrimarnuGrupu(dto);
+            DTOManagerLek.DodajPrimarnuGrupu(dto);
         }
         catch (Exception ex)
         {

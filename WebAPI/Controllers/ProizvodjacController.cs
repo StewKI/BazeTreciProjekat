@@ -12,7 +12,7 @@ public class ProizvodjacController : ControllerBase
     {
         try
         {
-            DTOManager.DodajProizvodjaca(dto);
+            DTOManagerLek.DodajProizvodjaca(dto);
         }
         catch (Exception ex)
         {

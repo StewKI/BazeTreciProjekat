@@ -13,7 +13,7 @@ public class StandardnaApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.DodajStandardnuApoteku(dto);
+            DTOManagerProdajneJedinice.DodajStandardnuApoteku(dto);
         }
         catch (Exception ex)
         {
@@ -27,7 +27,7 @@ public class StandardnaApotekaController : ControllerBase
     {
         try
         {
-            DTOManager.IzmeniSApoetku(dto);
+            DTOManagerProdajneJedinice.IzmeniSApoetku(dto);
         }
         catch (Exception ex)
         {

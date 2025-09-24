@@ -13,7 +13,7 @@ public class FarmaceutController : ControllerBase
     {
         try
         {
-            return new JsonResult(DTOManager.VratiOdgovornogFarmaceuta(id));
+            return new JsonResult(DTOManagerZaposleni.VratiOdgovornogFarmaceuta(id));
         }
         catch (Exception ex)
         {
@@ -26,7 +26,7 @@ public class FarmaceutController : ControllerBase
     {
         try
         {
-            DTOManager.DodajFarmaceuta(dto);
+            DTOManagerZaposleni.DodajFarmaceuta(dto);
         }
         catch (Exception ex)
         {
@@ -40,7 +40,7 @@ public class FarmaceutController : ControllerBase
     {
         try
         {
-            DTOManager.UpdateFarmaceuta(dto);
+            DTOManagerZaposleni.UpdateFarmaceuta(dto);
         }
         catch (Exception ex)
         {

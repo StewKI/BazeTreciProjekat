@@ -13,7 +13,7 @@ public class SekundarnaKategorijaController : ControllerBase
     {
         try
         {
-            DTOManager.DodajSekundarnuKategoriju(dto);
+            DTOManagerLek.DodajSekundarnuKategoriju(dto);
         }
         catch (Exception ex)
         {

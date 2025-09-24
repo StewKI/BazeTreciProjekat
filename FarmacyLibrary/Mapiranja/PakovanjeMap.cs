@@ -8,7 +8,9 @@ namespace FarmacyLibrary.Mapiranja
         public PakovanjeMap()
         {
             Table("Pakovanje");
-            Id(x => x.Id, "id").GeneratedBy.Identity();
+            Id(x => x.Id)
+             .Column("ID")
+             .GeneratedBy.Sequence("PAKOVANJE_SEQ");
             References(x => x.Lek, "lek_id").Not.Nullable();
             References(x => x.Oblik, "oblik_id").Not.Nullable();
             Map(x => x.VelicinaPakovanja, "velicina_pakovanja").Not.Nullable();

@@ -12,7 +12,7 @@ public class PakovanjeController : ControllerBase
     {
         try
         {
-            DTOManager.DodajPakovanje(dto);
+            DTOManagerLek.DodajPakovanje(dto);
         }
         catch (Exception ex)
         {

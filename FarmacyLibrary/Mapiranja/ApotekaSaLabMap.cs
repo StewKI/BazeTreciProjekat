@@ -3,7 +3,7 @@ using FluentNHibernate.Mapping;
 
 namespace FarmacyLibrary.Mapiranja
 {
-    public class ApotekaSaLabMap : SubclassMap<ApotekaSaLab>
+    public class ApotekaSaLabMap : SubclassMap<ApotekaSaLabBasic>
     {
         public ApotekaSaLabMap()
         {

@@ -8,7 +8,8 @@ namespace FarmacyLibrary.Mapiranja
         public ProizvodjacMap()
         {
             Table("Proizvodjac");
-            Id(x => x.Id, "id").GeneratedBy.Identity();
+            Id(x => x.Id, "ID")
+    .GeneratedBy.Sequence("SEQ_PROIZVODJAC_ID");
             Map(x => x.Naziv, "naziv").Not.Nullable();
             Map(x => x.Zemlja, "zemlja").Not.Nullable();
             Map(x => x.Telefon, "telefon");
