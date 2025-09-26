@@ -1,0 +1,81 @@
+@hostname = http://localhost:5175
+
+### Kreiraj prodaju
+POST {{hostname}}/Prodaja/Kreiraj
+Content-Type: application/json
+
+{
+  "prodaja": {
+    "prodajnaJedinicaId": 1,
+    "datumVreme": "2023-01-01T10:00:00",
+    "blagajnikMbr": 1
+  },
+  "stavke": [
+    {
+      "pakovanjeId": 1,
+      "kolicina": 2,
+      "cena": 500
+    },
+    {
+      "pakovanjeId": 2,
+      "kolicina": 1,
+      "cena": 1000
+    }
+  ]
+}
+
+### Kreiraj prodaju na recept
+POST {{hostname}}/Prodaja/KreirajNaRecept
+Content-Type: application/json
+
+{
+  "prodaja": {
+    "prodajnaJedinicaId": 1,
+    "datumVreme": "2023-01-01T11:00:00",
+    "blagajnikMbr": 1
+  },
+  "receptSerijskiBroj": "12345678",
+  "stavke": [
+    {
+      "pakovanjeId": 1,
+      "kolicina": 1,
+      "procenatParticip": 20
+    }
+  ]
+}
+
+### Get sva pakovanja
+GET {{hostname}}/Prodaja/Pakovanja
+
+### Get pakovanja sa zalihe
+GET {{hostname}}/Prodaja/Pakovanja/4
+
+### Get svi blagajnici
+GET {{hostname}}/Prodaja/Blagajnici
+
+### Get svi recepti
+GET {{hostname}}/Prodaja/Recepti
+
+### Get sve prodaje
+GET {{hostname}}/Prodaja
+
+### Get prodaje za prodajnu jedinicu
+GET {{hostname}}/Prodaja/prodajnaJedinica/1
+
+### Get prodaja by id
+GET {{hostname}}/Prodaja/3
+
+### Dodaj prodaju
+POST {{hostname}}/Prodaja/Dodaj
+Content-Type: application/json
+
+{
+  "prodajnaJedinicaId": 1,
+  "datumVreme": "2023-01-02T14:00:00",
+  "blagajnikMbr": 1,
+  "ukupnaVrednost": 1500,
+  "brojStavki": 2
+}
+
+### Obrisi prodaju
+DELETE {{hostname}}/Prodaja/1

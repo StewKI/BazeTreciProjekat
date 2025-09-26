@@ -1,0 +1,30 @@
+@hostname = http://localhost:5175
+
+### Create standardna apoteka
+POST {{hostname}}/StandardnaApoteka
+Content-Type: application/json
+
+{
+  "naziv": "Nova Standardna Apoteka",
+  "ulica": "Ulica 5",
+  "broj": "50",
+  "postanskiBroj": "11000",
+  "mesto": "Beograd",
+  "odgovorniFarmaceut": 75,
+  "datumOsnivanja": "2023-01-01T00:00:00"
+}
+
+### Update standardna apoteka
+PUT {{hostname}}/StandardnaApoteka
+Content-Type: application/json
+
+{
+  "id": 1,
+  "naziv": "Izmenjena Standardna Apoteka",
+  "ulica": "Ulica 6",
+  "broj": "60",
+  "postanskiBroj": "11000",
+  "mesto": "Beograd",
+  "odgovorniFarmaceutMbr": 75,
+  "datumOsnivanja": "2023-01-01T00:00:00"
+}

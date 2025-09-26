@@ -1,0 +1,41 @@
+@hostname = http://localhost:5175
+
+### Get all recepti
+GET {{hostname}}/Recept
+
+### Get recept by serijski broj
+GET {{hostname}}/Recept/345643
+
+### Create recept
+POST {{hostname}}/Recept
+Content-Type: application/json
+
+{
+  "serijskiBroj": "1234587",
+  "sifraLekara": "lekar1",
+  "datumIzd": "2023-01-01T00:00:00",
+  "status": "CEKANJE",
+  "nazivUstanove": "Ambulanta Toponica 2"
+}
+
+### Delete recept
+DELETE {{hostname}}/Recept/1234587
+
+### Realizuj recept
+POST {{hostname}}/Recept/12345123123/realizuj
+Content-Type: application/json
+
+{
+  "prodajnaJedinicaId": "123",
+  "datum": "2023-01-02T00:00:00"
+}
+
+### Add stavka to recept
+POST {{hostname}}/Recept/stavka
+Content-Type: application/json
+
+{
+    "receptSerijskiBroj": "12345123123",
+    "pakovanjeId": 1,
+    "kolicina": 2
+}

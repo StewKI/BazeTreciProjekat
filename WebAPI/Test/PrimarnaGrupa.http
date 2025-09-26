@@ -1,0 +1,27 @@
+@hostname = http://localhost:5175
+
+### Get all primarne grupe
+GET {{hostname}}/PrimarnaGrupa
+
+### Get primarna grupa by id
+GET {{hostname}}/PrimarnaGrupa/6
+
+### Create primarna grupa
+POST {{hostname}}/PrimarnaGrupa
+Content-Type: application/json
+
+{
+  "naziv": "Nova Primarna Grupa"
+}
+
+### Update primarna grupa
+PUT {{hostname}}/PrimarnaGrupa
+Content-Type: application/json
+
+{
+  "id": 6,
+  "naziv": "Izmenjena Primarna Grupa"
+}
+
+### Delete primarna grupa
+DELETE {{hostname}}/PrimarnaGrupa/6

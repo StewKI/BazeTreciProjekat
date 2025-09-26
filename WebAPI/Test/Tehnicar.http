@@ -1,0 +1,41 @@
+@hostname = http://localhost:5175
+
+### Get tehnicar by mbr
+GET {{hostname}}/Tehnicar/134
+
+### Create tehnicar
+POST {{hostname}}/Tehnicar
+Content-Type: application/json
+
+{
+  "ime": "Novi",
+  "prezime": "Tehnicar",
+  "datumRodj": "1990-01-01T00:00:00",
+  "adresa": "Adresa 2",
+  "telefon": "234567",
+  "datumZaposlenja": "2021-01-01T00:00:00",
+  "nivoObrazovanja": "SREDNJI",
+  "sertifikacije": [
+    {
+      "naziv": "Sertifikat 1",
+      "datum": "2022-01-01T00:00:00"
+    }
+  ],
+  "MatBr": "1234123123123"
+}
+
+### Update tehnicar
+PUT {{hostname}}/Tehnicar
+Content-Type: application/json
+
+{
+  "mBr": 134,
+  "ime": "Izmenjen",
+  "prezime": "Tehnicar",
+  "datumRodj": "1990-01-01T00:00:00",
+  "adresa": "Nova Adresa 3",
+  "telefon": "765432",
+  "datumZaposlenja": "2021-01-01T00:00:00",
+  "nivoObrazovanja": "VISI",
+  "MatBr": "1234123123123"
+}

@@ -1,0 +1,40 @@
+@hostname = http://localhost:5175
+
+### Get all lekovi
+GET {{hostname}}/Lek
+
+### Get lek by id
+GET {{hostname}}/Lek/10
+
+### Create lek
+POST {{hostname}}/Lek
+Content-Type: application/json
+
+{
+  "hemijskiNaziv": "Novi Hemijski Naziv",
+  "komercijalniNaziv": "Novi Komercijalni Naziv",
+  "dejstvo": "Novo Dejstvo",
+  "proizvodjacId": 1,
+  "primarnaGrupaId": 1,
+  "sekundarneKategorijeIds": [1, 2]
+}
+
+### Update lek
+PUT {{hostname}}/Lek
+Content-Type: application/json
+
+{
+  "id": 10,
+  "hemijskiNaziv": "Izmenjen Hemijski Naziv",
+  "komercijalniNaziv": "Izmenjen Komercijalni Naziv",
+  "dejstvo": "Izmenjeno Dejstvo",
+  "proizvodjacId": 1,
+  "primarnaGrupaId": 1,
+  "sekundarneKategorijeIds": [1, 2, 3]
+}
+
+### Delete lek
+DELETE {{hostname}}/Lek/10
+
+### Add sekundarna kategorija to lek
+POST {{hostname}}/Lek/10/sekundarnakategorija/2

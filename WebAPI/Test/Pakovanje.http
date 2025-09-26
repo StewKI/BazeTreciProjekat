@@ -1,0 +1,41 @@
+@hostname = http://localhost:5175
+
+### Get all pakovanja
+GET {{hostname}}/Pakovanje
+
+### Get pakovanje by id
+GET {{hostname}}/Pakovanje/1
+
+### Create pakovanje
+POST {{hostname}}/Pakovanje
+Content-Type: application/json
+
+{
+  "lekId": 1,
+  "oblikId": 1,
+  "velicinaPakovanja": "100ml",
+  "kolicinaAktivne": 50.5,
+  "jedinicaMere": "mg",
+  "ambalaza": "Staklena flasica",
+  "nacinCuvanja": "Na tamnom i hladnom mestu",
+  "preporuceniRokDana": 365
+}
+
+### Update pakovanje
+PUT {{hostname}}/Pakovanje
+Content-Type: application/json
+
+{
+  "id": 1,
+  "lekId": 1,
+  "oblikId": 1,
+  "velicinaPakovanja": "150ml",
+  "kolicinaAktivne": 75.0,
+  "jedinicaMere": "mg",
+  "ambalaza": "Plasticna flasica",
+  "nacinCuvanja": "Na suvom mestu",
+  "preporuceniRokDana": 730
+}
+
+### Delete pakovanje
+DELETE {{hostname}}/Pakovanje/1

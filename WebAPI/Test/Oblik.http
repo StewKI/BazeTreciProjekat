@@ -1,0 +1,27 @@
+@hostname = http://localhost:5175
+
+### Get all oblici
+GET {{hostname}}/Oblik
+
+### Get oblik by id
+GET {{hostname}}/Oblik/61
+
+### Create oblik
+POST {{hostname}}/Oblik
+Content-Type: application/json
+
+{
+  "naziv": "Novi Oblik"
+}
+
+### Update oblik
+PUT {{hostname}}/Oblik
+Content-Type: application/json
+
+{
+  "id": 61,
+  "naziv": "Izmenjen Oblik"
+}
+
+### Delete oblik
+DELETE {{hostname}}/Oblik/61

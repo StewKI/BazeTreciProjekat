@@ -1,0 +1,42 @@
+@hostname = http://localhost:5175
+
+### Get all farmaceuti
+GET {{hostname}}/Farmaceut
+
+### Get farmaceut by id
+GET {{hostname}}/Farmaceut/1
+
+### Create farmaceut
+POST {{hostname}}/Farmaceut
+Content-Type: application/json
+
+{
+  "ime": "Novi",
+  "prezime": "Farmaceut",
+  "datumRodj": "1985-01-01T00:00:00",
+  "adresa": "Adresa 3",
+  "telefon": "345678",
+  "datumZaposlenja": "2019-01-01T00:00:00",
+  "datumDiplomiranja": "2010-01-01T00:00:00",
+  "brLicence": "lic123",
+  "datumPoslednjeObnoveLicence": "2022-01-01T00:00:00",
+  "specijalnost": "Opsta farmacija"
+}
+
+### Update farmaceut
+PUT {{hostname}}/Farmaceut
+Content-Type: application/json
+
+{
+  "id": 1,
+  "ime": "Izmenjen",
+  "prezime": "Farmaceut",
+  "datumRodj": "1985-01-01T00:00:00",
+  "adresa": "Nova Adresa 4",
+  "telefon": "876543",
+  "datumZaposlenja": "2019-01-01T00:00:00",
+  "datumDiplomiranja": "2010-01-01T00:00:00",
+  "brLicence": "lic123",
+  "datumPoslednjeObnoveLicence": "2023-01-01T00:00:00",
+  "specijalnost": "Klinicka farmacija"
+}

@@ -1,0 +1,29 @@
+@hostname = http://localhost:5175
+
+### Get all distributeri
+GET {{hostname}}/Distributer
+
+### Get distributer by id
+GET {{hostname}}/Distributer/4
+
+### Create distributer
+POST {{hostname}}/Distributer
+Content-Type: application/json
+
+{
+  "naziv": "Novi Distributer",
+  "kontakt": "Kontakt Info"
+}
+
+### Update distributer
+PUT {{hostname}}/Distributer
+Content-Type: application/json
+
+{
+  "id": 4,
+  "naziv": "Izmenjen Distributer",
+  "kontakt": "Novi Kontakt Info"
+}
+
+### Delete distributer
+DELETE {{hostname}}/Distributer/4

@@ -1,0 +1,89 @@
+@hostname = http://localhost:5175
+
+### Get all prodajne jedinice
+GET {{hostname}}/ProdajnaJedinica
+
+### Get osnovne prodajne jedinice
+GET {{hostname}}/ProdajnaJedinica/osnovne
+
+### Get prodajna jedinica by id
+GET {{hostname}}/ProdajnaJedinica/31
+
+### Get prodajna jedinica tip by id
+GET {{hostname}}/ProdajnaJedinica/tip/14
+
+### Create prodajna jedinica
+POST {{hostname}}/ProdajnaJedinica
+Content-Type: application/json
+
+{
+  "naziv": "Nova Prodajna Jedinica",
+  "ulica": "Ulica 3",
+  "broj": "30",
+  "postanskiBroj": "11000",
+  "mesto": "Beograd",
+  "odgovorniFarmaceutMbr": 1
+}
+
+### Update prodajna jedinica
+PUT {{hostname}}/ProdajnaJedinica
+Content-Type: application/json
+
+{
+  "id": 1,
+  "naziv": "Izmenjena Prodajna Jedinica",
+  "ulica": "Ulica 4",
+  "broj": "40",
+  "postanskiBroj": "11000",
+  "mesto": "Beograd",
+  "odgovorniFarmaceutMbr": 1
+}
+
+### Delete prodajna jedinica
+DELETE {{hostname}}/ProdajnaJedinica/1
+
+### Get radno vreme for prodajna jedinica
+GET {{hostname}}/ProdajnaJedinica/1/radnovreme
+
+### Get radno vreme for dan
+GET {{hostname}}/ProdajnaJedinica/1/radnovreme/1
+
+### Add radno vreme
+POST {{hostname}}/ProdajnaJedinica/radnovreme
+Content-Type: application/json
+
+{
+  "prodajnaJedinicaId": 1,
+  "dan": 1,
+  "vremeOd": "08:00:00",
+  "vremeDo": "16:00:00"
+}
+
+### Update radno vreme
+PUT {{hostname}}/ProdajnaJedinica/radnovreme
+Content-Type: application/json
+
+{
+  "prodajnaJedinicaId": 1,
+  "dan": 1,
+  "vremeOd": "09:00:00",
+  "vremeDo": "17:00:00"
+}
+
+### Delete radno vreme
+DELETE {{hostname}}/ProdajnaJedinica/1/radnovreme/1
+
+### Get farmaceuti for prodajna jedinica
+GET {{hostname}}/ProdajnaJedinica/1/farmaceuti
+
+### Get menadzeri for prodajna jedinica
+GET {{hostname}}/ProdajnaJedinica/1/menadzeri
+
+### Get raspored rada for prodajna jedinica
+GET {{hostname}}/ProdajnaJedinica/1/rasporedrada
+
+### Get standardne apoteke
+GET {{hostname}}/ProdajnaJedinica/standardne
+
+### Get specijalizovane apoteke
+GET {{hostname}}/ProdajnaJedinica/specijalizovane

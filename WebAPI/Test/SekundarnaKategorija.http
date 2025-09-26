@@ -1,0 +1,27 @@
+@hostname = http://localhost:5175
+
+### Get all sekundarne kategorije
+GET {{hostname}}/SekundarnaKategorija
+
+### Get sekundarna kategorija by id
+GET {{hostname}}/SekundarnaKategorija/41
+
+### Create sekundarna kategorija
+POST {{hostname}}/SekundarnaKategorija
+Content-Type: application/json
+
+{
+  "naziv": "Nova Sekundarna Kategorija"
+}
+
+### Update sekundarna kategorija
+PUT {{hostname}}/SekundarnaKategorija
+Content-Type: application/json
+
+{
+  "id": 41,
+  "naziv": "Izmenjena Sekundarna Kategorija"
+}
+
+### Delete sekundarna kategorija
+DELETE {{hostname}}/SekundarnaKategorija/41

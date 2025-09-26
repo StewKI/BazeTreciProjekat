@@ -1,0 +1,28 @@
+@hostname = http://localhost:5175
+
+### Add menadzer to apoteka (create inspection)
+POST {{hostname}}/MenadzerApoteka
+Content-Type: application/json
+
+{
+  "idMenadzera": 1,
+  "prodajnaJedinicaId": 1,
+  "datumKontrole": "2024-01-01T10:00:00"
+}
+
+### Update menadzer apoteka assignment dates
+PUT {{hostname}}/MenadzerApoteka
+Content-Type: application/json
+
+{
+  "idMenadzera": 1,
+  "prodajnaJedinicaId": 1,
+  "od": "2023-01-01T00:00:00",
+  "do": "2024-01-01T00:00:00"
+}
+
+### Get apoteke for menadzer by id
+GET {{hostname}}/MenadzerApoteka/menadzer/1
+
+### Delete menadzer from apoteka
+DELETE {{hostname}}/MenadzerApoteka/1/menadzer/1

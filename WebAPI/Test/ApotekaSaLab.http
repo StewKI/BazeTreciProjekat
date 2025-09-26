@@ -1,0 +1,36 @@
+@hostname = http://localhost:5175
+
+### Get all apoteke sa lab
+GET {{hostname}}/ApotekaSaLab
+
+### Get apoteka sa lab by id
+GET {{hostname}}/ApotekaSaLab/1
+
+### Create apoteka sa lab
+POST {{hostname}}/ApotekaSaLab
+Content-Type: application/json
+
+{
+  "naziv": "Nova Apoteka sa Lab",
+  "ulica": "Ulica 1",
+  "broj": "10",
+  "postanskiBroj": "11000",
+  "mesto": "Beograd",
+  "odgovorniFarmaceutId": 1,
+  "napomena": "Laboratorija u sklopu apoteke."
+}
+
+### Update apoteka sa lab
+PUT {{hostname}}/ApotekaSaLab
+Content-Type: application/json
+
+{
+  "id": 1,
+  "naziv": "Izmenjena Apoteka sa Lab",
+  "ulica": "Ulica 2",
+  "broj": "20",
+  "postanskiBroj": "11000",
+  "mesto": "Beograd",
+  "odgovorniFarmaceutId": 1,
+  "napomena": "Nova napomena."
+}

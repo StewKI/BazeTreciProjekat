@@ -1,0 +1,22 @@
+@hostname = http://localhost:5175
+
+### Create isporuka
+POST {{hostname}}/Isporuka
+Content-Type: application/json
+
+{
+  "distributerId": 1,
+  "prodajnaJedinicaId": 1,
+  "datum": "2023-01-01T00:00:00",
+  "magacionerMbr": 1,
+  "stavke": [
+    {
+      "pakovanjeId": 1,
+      "kolicina": 50
+    },
+    {
+      "pakovanjeId": 2,
+      "kolicina": 30
+    }
+  ]
+}

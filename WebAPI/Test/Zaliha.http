@@ -1,0 +1,37 @@
+@hostname = http://localhost:5175
+
+### Get all zalihe
+GET {{hostname}}/Zaliha
+
+### Get zalihe by apoteka
+GET {{hostname}}/Zaliha/apoteka/61
+
+### Get zaliha by id
+GET {{hostname}}/Zaliha/14/1
+
+### Create zaliha
+POST {{hostname}}/Zaliha
+Content-Type: application/json
+
+{
+  "prodajnaJedinicaId": 14,
+  "pakovanjeId": 1,
+  "kolicina": 104,
+  "datumPoslednjeIsporuke": "2023-01-01T00:00:00",
+  "odgovorniMagacionerId": 101
+}
+
+### Update zaliha
+PUT {{hostname}}/Zaliha
+Content-Type: application/json
+
+{
+  "prodajnaJedinicaId": 14,
+  "pakovanjeId": 1,
+  "kolicina": 150,
+  "datumPoslednjeIsporuke": "2023-01-02T00:00:00",
+  "odgovorniMagacionerMbr": 101
+}
+
+### Delete zaliha
+DELETE {{hostname}}/Zaliha/14/1

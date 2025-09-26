@@ -1,0 +1,37 @@
+@hostname = http://localhost:5175
+
+### Get all menadzeri
+GET {{hostname}}/Menadzer
+
+### Get menadzer by id
+GET {{hostname}}/Menadzer/1
+
+### Get menadzeri for apoteka
+GET {{hostname}}/Menadzer/apoteka/1
+
+### Create menadzer
+POST {{hostname}}/Menadzer
+Content-Type: application/json
+
+{
+  "ime": "Novi",
+  "prezime": "Menadzer",
+  "datumRodj": "1980-01-01T00:00:00",
+  "adresa": "Adresa 1",
+  "telefon": "123456",
+  "datumZaposlenja": "2020-01-01T00:00:00"
+}
+
+### Update menadzer
+PUT {{hostname}}/Menadzer
+Content-Type: application/json
+
+{
+  "id": 1,
+  "ime": "Izmenjen",
+  "prezime": "Menadzer",
+  "datumRodj": "1980-01-01T00:00:00",
+  "adresa": "Nova Adresa 2",
+  "telefon": "654321",
+  "datumZaposlenja": "2020-01-01T00:00:00"
+}

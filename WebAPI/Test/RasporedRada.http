@@ -1,0 +1,48 @@
+@hostname = http://localhost:5175
+
+### Get all rasporedi rada
+GET {{hostname}}/RasporedRada
+
+### Get raspored rada for zaposleni
+GET {{hostname}}/RasporedRada/zaposleni/101
+
+### Get raspored rada by mbr
+GET {{hostname}}/RasporedRada/101
+
+### Create raspored rada
+POST {{hostname}}/RasporedRada
+Content-Type: application/json
+
+{
+  "mBr": 101,
+  "prodajnaJedinicaId": 1,
+  "pocetak": "2023-01-01T08:00:00",
+  "kraj": "2023-01-01T16:00:00",
+  "brojSmene": 1,
+  "smenaNaziv": "Prva",
+  "zaposleniIme": "Andrija",
+  "zaposleniPrezime": "Stevanovic",
+  "prodajnaJedinicaNaziv": "Jed1"
+}
+
+### Update radno mesto for zaposleni
+PUT {{hostname}}/RasporedRada/zaposleni/1/radnomesto
+Content-Type: application/json
+
+{
+  "idRadnogMesta": 2,
+  "smena": 2
+}
+
+### Delete raspored rada for zaposleni by mbr
+DELETE {{hostname}}/RasporedRada/zaposleni/1
+
+### Delete raspored rada with body
+DELETE {{hostname}}/RasporedRada
+Content-Type: application/json
+
+{
+  "mbr": 1,
+  "prodajnaJedinicaId": 1,
+  "pocetak": "2023-01-01T08:00:00"
+}
