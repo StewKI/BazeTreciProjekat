@@ -4,7 +4,7 @@
     {
         public virtual long Id { get; set; }
 
-        public virtual ProdajnaJedinicaBasic ProdajnaJedinica { get; set; } = default!;
+        public virtual ProdajnaJedinica ProdajnaJedinica { get; set; } = default!;
         public virtual DateTime DatumVreme { get; set; }
         public virtual Zaposleni? Blagajnik { get; set; }
 

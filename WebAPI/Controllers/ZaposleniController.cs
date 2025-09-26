@@ -1,80 +1,85 @@
 using FarmacyLibrary;
 using FarmacyLibrary.Entiteti;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ZaposleniController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpGet]
-    public IActionResult GetZaposleni()
+    [ApiController]
+    [Route("[controller]")]
+    public class ZaposleniController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetZaposleni()
         {
-            return new JsonResult(DTOManagerZaposleni.VratiSveZaposlene());
+            try
+            {
+                return new JsonResult(DTOManagerZaposleni.VratiSveZaposlene());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-    }
-    
-    [HttpGet]
-    [Route("{m_br:long}")]
-    public IActionResult GetZaposleni(long m_br)
-    {
-        try
-        {
-            return new JsonResult(DTOManagerZaposleni.VratiZaposlenog(m_br));
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-    }
 
-    [HttpPost]
-    public IActionResult AddZaposleni([FromBody] ZaposleniBasic dto)
-    {
-        try
+        [HttpGet("{id}")]
+        public IActionResult GetZaposleni(long id)
         {
-            DTOManagerZaposleni.DodajZaposlenog(dto);
+            try
+            {
+                var zaposleni = DTOManagerZaposleni.VratiZaposlenog(id);
+                if (zaposleni == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(zaposleni);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Created();
-    }
 
-    [HttpPut]
-    public IActionResult ChangeZaposleni([FromBody] Zaposleni dto)
-    {
-        try
+        [HttpPost]
+        public IActionResult PostZaposleni([FromBody] ZaposleniBasic zaposleni)
         {
-            DTOManagerZaposleni.UpdateZaposlenog(dto);
+            try
+            {
+                DTOManagerZaposleni.DodajZaposlenog(zaposleni);
+                return CreatedAtAction(nameof(GetZaposleni), new { id = zaposleni.Id }, zaposleni);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Ok();
-    }
 
-    [HttpDelete]
-    [Route("{mbr:long}")]
-    public IActionResult DeleteZaposleni(long mbr)
-    {
-        try
+        [HttpPut]
+        public IActionResult PutZaposleni([FromBody] ZaposleniBasic zaposleni)
         {
-            DTOManagerZaposleni.ObrisiZaposlenog(mbr);
+            try
+            {
+                DTOManagerZaposleni.UpdateZaposlenog(zaposleni);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteZaposleni(long id)
         {
-            return BadRequest(ex.ToString());
+            try
+            {
+                DTOManagerZaposleni.ObrisiZaposlenog(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        return Ok();
     }
 }

@@ -20,7 +20,7 @@ namespace FarmacyLibrary.Mapiranja
                 .CustomType<DateType>()
                 .Nullable();
 
-            References(x => x.OdgovorniMagacioner, "odgovorni_magacioner_mbr")
+            References(x => x.OdgovorniMagacioner, "odgovorni_magacioner_id")
                 .Nullable();
 
         }

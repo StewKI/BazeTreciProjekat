@@ -1,38 +1,40 @@
 using FarmacyLibrary;
 using FarmacyLibrary.Entiteti;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class SpecijalizovanaApotekaController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpPost]
-    public IActionResult AddSpecApoteka([FromBody] SpecijalizovanaApoteka dto)
+    [ApiController]
+    [Route("[controller]")]
+    public class SpecijalizovanaApotekaController : ControllerBase
     {
-        try
+        [HttpPost]
+        public IActionResult AddSpecijalizovanaApoteka([FromBody] SpecijalizovanaApotekaBasic dto)
         {
-            DTOManagerProdajneJedinice.DodajSpecApoteku(dto);
+            try
+            {
+                DTOManagerProdajneJedinice.DodajSpecApoteku(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        return Created();
-    }
 
-    [HttpPut]
-    public IActionResult ChangeSpecApoteka([FromBody] SpecijalizovanaApoteka dto)
-    {
-        try
+        [HttpPut]
+        public IActionResult ChangeSpecijalizovanaApoteka([FromBody] SpecijalizovanaApotekaBasic dto)
         {
-            DTOManagerProdajneJedinice.IzmeniSpecApoetku(dto);
+            try
+            {
+                DTOManagerProdajneJedinice.IzmeniSpecApoetku(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        return Ok();
     }
 }

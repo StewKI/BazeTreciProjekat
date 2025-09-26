@@ -1,6 +1,6 @@
 ﻿namespace FarmacyLibrary.Entiteti
 {
-    public class ApotekaSaLabBasic : ProdajnaJedinicaBasic
+    public class ApotekaSaLab : ProdajnaJedinica
     {
         public virtual string? Napomena { get; set; }
     }

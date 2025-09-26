@@ -1,38 +1,71 @@
 using FarmacyLibrary;
 using FarmacyLibrary.Entiteti;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ApotekaSaLabController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpPost]
-    public IActionResult AddApotekaSaLab([FromBody] ApotekaSaLabBasic dto)
+    [ApiController]
+    [Route("[controller]")]
+    public class ApotekaSaLabController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetApotekeSaLab()
         {
-            DTOManagerProdajneJedinice.DodajApotekuSaLab(dto);
+            try
+            {
+                return new JsonResult(DTOManagerProdajneJedinice.VratiApotekeSaLab());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Created();
-    }
 
-    [HttpPut]
-    public IActionResult ChangeApotekaSaLab([FromBody] ApotekaSaLabBasic dto)
-    {
-        try
+        [HttpGet("{id}")]
+        public IActionResult GetApotekaSaLab(long id)
         {
-            DTOManagerProdajneJedinice.IzmeniApoetkuSaLab(dto);
+            try
+            {
+                var apoteka = DTOManagerProdajneJedinice.VratiProdajnuJedinicuTip(id);
+                if (apoteka == null || !(apoteka is ApotekaSaLab))
+                {
+                    return NotFound();
+                }
+                return new JsonResult(apoteka);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpPost]
+        public IActionResult AddApotekaSaLab([FromBody] ApotekaSaLabBasic dto)
         {
-            return BadRequest(ex.ToString());
+            try
+            {
+                DTOManagerProdajneJedinice.DodajApotekuSaLab(dto);
+                return CreatedAtAction(nameof(GetApotekaSaLab), new { id = dto.Id }, dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        return Ok();
+
+        [HttpPut]
+        public IActionResult ChangeApotekaSaLab([FromBody] ApotekaSaLabBasic dto)
+        {
+            try
+            {
+                DTOManagerProdajneJedinice.IzmeniApotekuSaLab(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

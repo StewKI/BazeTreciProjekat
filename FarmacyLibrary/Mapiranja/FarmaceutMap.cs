@@ -2,12 +2,12 @@
 
 namespace FarmacyLibrary.Mapiranja
 {
-    public class FarmaceutMap : SubclassMap<FarmacyLibrary.Entiteti.FarmaceutBasic>
+    public class FarmaceutMap : SubclassMap<FarmacyLibrary.Entiteti.Farmaceut>
     {
         public FarmaceutMap()
         {
             Table("Farmaceut");
-            KeyColumn("m_br");
+            KeyColumn("id");
 
             Map(x => x.DatumDiplomiranja, "datum_diplomiranja").CustomType("date").Not.Nullable();
             Map(x => x.BrLicence, "br_licence").Not.Nullable().Unique();

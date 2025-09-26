@@ -2,12 +2,12 @@
 
 namespace FarmacyLibrary.Mapiranja
 {
-    public class MenadzerMap : SubclassMap<FarmacyLibrary.Entiteti.MenadzerBasic>
+    public class MenadzerMap : SubclassMap<FarmacyLibrary.Entiteti.Menadzer>
     {
         public MenadzerMap()
         {
             Table("Menadzer");
-            KeyColumn("m_br");
+            KeyColumn("id");
         }
     }
 }

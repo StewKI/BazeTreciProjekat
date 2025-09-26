@@ -2,7 +2,7 @@
 {
     public class RadnoVreme : IEquatable<RadnoVreme>
     {
-        public virtual FarmacyLibrary.Entiteti.ProdajnaJedinicaBasic ProdajnaJedinica { get; set; } = default!;
+        public virtual FarmacyLibrary.Entiteti.ProdajnaJedinica ProdajnaJedinica { get; set; } = default!;
         public virtual int Dan { get; set; }            // 1..7
         public virtual DateTime VremeOd { get; set; }   // TIMESTAMP
         public virtual DateTime VremeDo { get; set; }   // TIMESTAMP

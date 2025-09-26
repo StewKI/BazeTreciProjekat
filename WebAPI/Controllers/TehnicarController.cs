@@ -1,38 +1,57 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class TehnicarController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpPost]
-    public IActionResult AddTehnicar([FromBody] TehnicarBasic dto)
+    [ApiController]
+    [Route("[controller]")]
+    public class TehnicarController : ControllerBase
     {
-        try
+        [HttpGet("{mbr}")]
+        public IActionResult GetTehnicar(long mbr)
         {
-            DTOManagerZaposleni.DodajTehnicara(dto);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Created();
-    }
-
-    [HttpPut]
-    public IActionResult ChangeTehnicar([FromBody] TehnicarBasic dto)
-    {
-        try
-        {
-            DTOManagerZaposleni.UpdateTehnicara(dto);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
+            try
+            {
+                var tehnicar = DTOManagerZaposleni.VratiTehnicara(mbr);
+                if (tehnicar == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(tehnicar);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
-        return Ok();
+        [HttpPost]
+        public IActionResult AddTehnicar([FromBody] TehnicarBasic dto)
+        {
+            try
+            {
+                DTOManagerZaposleni.DodajTehnicara(dto);
+                return CreatedAtAction(nameof(GetTehnicar), new { mbr = dto.Id }, dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        [HttpPut]
+        public IActionResult ChangeTehnicar([FromBody] TehnicarBasic dto)
+        {
+            try
+            {
+                DTOManagerZaposleni.UpdateTehnicara(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
     }
 }

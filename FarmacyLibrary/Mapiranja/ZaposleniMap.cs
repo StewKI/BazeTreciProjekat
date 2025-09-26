@@ -8,8 +8,9 @@ namespace FarmacyLibrary.Mapiranja
         public ZaposleniMap()
         {
             Table("Zaposleni");
-            Id(x => x.MBr).Column("m_br")
-            .GeneratedBy.Sequence("ZAPOSLENI_SEQ");
+            Id(x => x.Id).Column("id")
+                .GeneratedBy.Sequence("ZAPOSLENI_SEQ");
+            Map(x => x.MatBr, "mbr");
             Map(x => x.Ime, "ime").Not.Nullable();
             Map(x => x.Prezime, "prezime").Not.Nullable();
             Map(x => x.DatumRodj, "datum_rodj").CustomType("date").Not.Nullable();

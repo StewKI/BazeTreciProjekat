@@ -1,23 +1,84 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class PrimarnaGrupaController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpPost]
-    public IActionResult AddPrimarnaGrupa([FromBody] PrimarnaGrupaBasic dto)
+    [ApiController]
+    [Route("[controller]")]
+    public class PrimarnaGrupaController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetPrimarneGrupe()
         {
-            DTOManagerLek.DodajPrimarnuGrupu(dto);
+            try
+            {
+                return new JsonResult(DTOManagerLek.VratiPrimarneGrupe());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpGet("{id}")]
+        public IActionResult GetPrimarnaGrupa(long id)
         {
-            return BadRequest(ex.ToString());
+            try
+            {
+                var grupa = DTOManagerLek.VratiPrimarnuGrupu(id);
+                if (grupa == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(grupa);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        return Created();
+
+        [HttpPost]
+        public IActionResult PostPrimarnaGrupa([FromBody] PrimarnaGrupaBasic grupa)
+        {
+            try
+            {
+                var grupaId = DTOManagerLek.DodajPrimarnuGrupu(grupa);
+                return CreatedAtAction(nameof(GetPrimarnaGrupa), new { id = grupaId }, grupa);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult PutPrimarnaGrupa([FromBody] PrimarnaGrupaBasic grupa)
+        {
+            try
+            {
+                DTOManagerLek.IzmeniPrimarnuGrupu(grupa);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeletePrimarnaGrupa(long id)
+        {
+            try
+            {
+                DTOManagerLek.ObrisiPrimarnuGrupu(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

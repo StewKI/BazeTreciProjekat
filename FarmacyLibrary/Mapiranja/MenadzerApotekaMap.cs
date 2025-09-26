@@ -11,7 +11,7 @@ namespace FarmacyLibrary.Mapiranja
             Table("Menadzer_Apoteka");
 
             CompositeId()
-                .KeyReference(x => x.Menadzer, "m_br_menadzera")
+                .KeyReference(x => x.Menadzer, "id_menadzera")
                 .KeyReference(x => x.ProdajnaJedinica, "prodajna_jedinica_id")
                 .KeyProperty(x => x.Od, "od").CustomType<DateType>();
 

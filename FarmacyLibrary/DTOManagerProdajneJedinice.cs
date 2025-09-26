@@ -19,7 +19,7 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var ent = s.Query<MenadzerApoteka>()
-                           .FirstOrDefault(x => x.Menadzer.MBr == dto.MBrMenadzera
+                           .FirstOrDefault(x => x.Menadzer.Id == dto.IdMenadzera
                                              && x.ProdajnaJedinica.Id == dto.ProdajnaJedinicaId);
 
                 if (ent != null)
@@ -36,7 +36,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
@@ -55,7 +55,7 @@ namespace FarmacyLibrary
                 {
                     list.Add(new MenadzerBasic
                     {
-                        MBr = z.MBr,
+                        Id = z.Id,
                         Ime = z.Ime,
                         Prezime = z.Prezime,
                         DatumRodj = z.DatumRodj,
@@ -72,6 +72,7 @@ namespace FarmacyLibrary
             catch(Exception ex)
             {
 
+                throw new Exception(ex.Message);
             }
             return list;
         }
@@ -80,9 +81,9 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                var odgovorni = s.Load<Entiteti.FarmaceutBasic>(dto.OdgovorniFarmaceutMbr);
+                var odgovorni = s.Load<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
 
-                var pj = new Entiteti.ProdajnaJedinicaBasic
+                var pj = new Entiteti.ProdajnaJedinica
                 {
                     Naziv = dto.Naziv,
                     Ulica = dto.Ulica,
@@ -96,12 +97,8 @@ namespace FarmacyLibrary
                 s.Flush();
                 dto.Id = pj.Id;
             }
-            catch (GenericADOException ex)
-            {
-                // Error handling - message box removed
-            }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
@@ -110,17 +107,21 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                
+                var odgovorniFarmaceut = s.Get<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
+                if (odgovorniFarmaceut == null)
+                {
+                    throw new ArgumentException("Odgovorni farmaceut sa tim ID-em ne postoji!");
+                }
 
-                var pj = new Entiteti.ApotekaSaLabBasic
+                var pj = new Entiteti.ApotekaSaLab
                 {
                     Naziv = dto.Naziv,
                     Ulica = dto.Ulica,
                     Broj = dto.Broj,
                     PostanskiBroj = dto.PostanskiBroj,
                     Mesto = dto.Mesto,
-                    Napomena= dto.Napomena,
-                    OdgovorniFarmaceut=dto.OdgovorniFarmaceut,
+                    Napomena = dto.Napomena,
+                    OdgovorniFarmaceut = odgovorniFarmaceut
                 };
 
                 s.Save(pj);
@@ -129,16 +130,17 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
-        public static void DodajSpecApoteku(SpecijalizovanaApoteka dto)
+        public static void DodajSpecApoteku(SpecijalizovanaApotekaBasic dto)
         {
             try
             {
                 using var s = DataLayer.GetSession();
 
+                var odgovorniFarmaceut = s.Get<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
 
                 var pj = new Entiteti.SpecijalizovanaApoteka
                 {
@@ -149,7 +151,7 @@ namespace FarmacyLibrary
                     Mesto = dto.Mesto,
                     Napomena = dto.Napomena,
                     SpecijalnostTipa=dto.SpecijalnostTipa,
-                    OdgovorniFarmaceut=dto.OdgovorniFarmaceut,
+                    OdgovorniFarmaceut=odgovorniFarmaceut,
                 };
 
                 s.Save(pj);
@@ -158,16 +160,18 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
-        public static void DodajStandardnuApoteku(StandardnaApoteka dto)
+        public static void DodajStandardnuApoteku(StandardnaApotekaBasic dto)
         {
             try
             {
                 using var s = DataLayer.GetSession();
-
-
+                
+                var odgovorniFarmaceut = s.Get<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
+                
+                
                 var pj = new Entiteti.StandardnaApoteka
                 {
                     Naziv = dto.Naziv,
@@ -176,7 +180,7 @@ namespace FarmacyLibrary
                     PostanskiBroj = dto.PostanskiBroj,
                     Mesto = dto.Mesto,
                     Napomena = dto.Napomena,         
-                    OdgovorniFarmaceut = dto.OdgovorniFarmaceut,
+                    OdgovorniFarmaceut = odgovorniFarmaceut,
                 };
 
                 s.Save(pj);
@@ -185,7 +189,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
@@ -194,7 +198,7 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                var pj = s.Get<Entiteti.ProdajnaJedinicaBasic>(id);
+                var pj = s.Get<Entiteti.ProdajnaJedinica>(id);
                 if (pj == null) return null;
 
                 return new ProdajnaJedinicaBasic
@@ -205,24 +209,28 @@ namespace FarmacyLibrary
                     Broj = pj.Broj,
                     PostanskiBroj = pj.PostanskiBroj,
                     Mesto = pj.Mesto,
-                    OdgovorniFarmaceutMbr = pj.OdgovorniFarmaceut?.MBr ?? 0
+                    OdgovorniFarmaceutId = pj.OdgovorniFarmaceut?.Id ?? 0
                 };
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return null;
         }
 
-        public static Entiteti.ProdajnaJedinicaBasic VratiProdajnuJedinicuTip(long id)
+        public static Entiteti.ProdajnaJedinica VratiProdajnuJedinicuTip(long id)
         {
             try
             {
                 using var s = DataLayer.GetSession();
 
                 // 1) Apoteka sa laboratorijom
-                var lab = s.Get<Entiteti.ApotekaSaLabBasic>(id); // <-- ako ti se entitet zove drugačije, promeni ovde
+                var lab = s.Get<Entiteti.ApotekaSaLab>(id); // <-- ako ti se entitet zove drugačije, promeni ovde
                 if (lab != null)
                 {
-                    return new ApotekaSaLabBasic
+                    return new ApotekaSaLab
                     {
                         Id = lab.Id,
                         Naziv = lab.Naziv,
@@ -277,7 +285,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
 
             return null;
@@ -288,7 +296,7 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                foreach (var pj in s.Query<Entiteti.ProdajnaJedinicaBasic>())
+                foreach (var pj in s.Query<Entiteti.ProdajnaJedinica>())
                 {
                     list.Add(new ProdajnaJedinicaBasic
                     {
@@ -298,12 +306,12 @@ namespace FarmacyLibrary
                         Broj = pj.Broj,
                         PostanskiBroj = pj.PostanskiBroj,
                         Mesto = pj.Mesto,
-                        OdgovorniFarmaceutMbr = pj.OdgovorniFarmaceut?.MBr ?? 0
+                        OdgovorniFarmaceutId = pj.OdgovorniFarmaceut?.Id ?? 0
                     });
                 }
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return list;
         }
@@ -315,8 +323,8 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 // Uzmi samo osnovne prodajne jedinice (ne nasleđene)
-                var osnovne = s.Query<Entiteti.ProdajnaJedinicaBasic>()
-                    .Where(pj => !(pj is Entiteti.ApotekaSaLabBasic) && 
+                var osnovne = s.Query<Entiteti.ProdajnaJedinica>()
+                    .Where(pj => !(pj is Entiteti.ApotekaSaLab) && 
                                  !(pj is Entiteti.StandardnaApoteka) && 
                                  !(pj is Entiteti.SpecijalizovanaApoteka))
                     .ToList();
@@ -331,25 +339,25 @@ namespace FarmacyLibrary
                         Broj = pj.Broj,
                         PostanskiBroj = pj.PostanskiBroj,
                         Mesto = pj.Mesto,
-                        OdgovorniFarmaceutMbr = pj.OdgovorniFarmaceut?.MBr ?? 0
+                        OdgovorniFarmaceutId = pj.OdgovorniFarmaceut?.Id ?? 0
                     });
                 }
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return list;
         }
 
-        public static IList<ApotekaSaLabBasic> VratiApotekeSaLab()
+        public static IList<ApotekaSaLab> VratiApotekeSaLab()
         {
-            var list = new List<ApotekaSaLabBasic>();
+            var list = new List<ApotekaSaLab>();
             try
             {
                 using var s = DataLayer.GetSession();
-                foreach (var pj in s.Query<Entiteti.ApotekaSaLabBasic>())
+                foreach (var pj in s.Query<Entiteti.ApotekaSaLab>())
                 {
-                    list.Add(new ApotekaSaLabBasic
+                    list.Add(new ApotekaSaLab
                     {
                         Id = pj.Id,
                         Naziv = pj.Naziv,
@@ -363,7 +371,7 @@ namespace FarmacyLibrary
                 }
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return list;
         }
@@ -390,7 +398,7 @@ namespace FarmacyLibrary
                 }
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return list;
         }
@@ -418,7 +426,7 @@ namespace FarmacyLibrary
                 }
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return list;
         }
@@ -428,33 +436,36 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                var pj = s.Load<Entiteti.ProdajnaJedinicaBasic>(dto.Id);
+                var pj = s.Load<Entiteti.ProdajnaJedinica>(dto.Id);
                 pj.Naziv = dto.Naziv;
                 pj.Ulica = dto.Ulica;
                 pj.Broj = dto.Broj;
                 pj.PostanskiBroj = dto.PostanskiBroj;
                 pj.Mesto = dto.Mesto;
-                pj.OdgovorniFarmaceut = s.Load<Entiteti.FarmaceutBasic>(dto.OdgovorniFarmaceutMbr);
+                pj.OdgovorniFarmaceut = s.Load<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
 
                 s.Update(pj);
                 s.Flush();
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
-        public static void IzmeniSpecApoetku(SpecijalizovanaApoteka dto)
+        public static void IzmeniSpecApoetku(SpecijalizovanaApotekaBasic dto)
         {
             try
             {
                 using var s = DataLayer.GetSession();
+
+                var odgovorniFarmaceut = s.Get<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
+                
                 var pj = s.Load<Entiteti.SpecijalizovanaApoteka>(dto.Id);
                 pj.Naziv = dto.Naziv;
                 pj.Ulica = dto.Ulica;
                 pj.Broj = dto.Broj;
                 pj.PostanskiBroj = dto.PostanskiBroj;
                 pj.Mesto = dto.Mesto;
-                pj.OdgovorniFarmaceut = dto.OdgovorniFarmaceut;
+                pj.OdgovorniFarmaceut = odgovorniFarmaceut;
                 pj.SpecijalnostTipa = dto.SpecijalnostTipa;
                
 
@@ -462,22 +473,25 @@ namespace FarmacyLibrary
                 s.Flush();
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
-        public static void IzmeniSApoetku(Entiteti.StandardnaApoteka dto)
+        public static void IzmeniSApoetku(StandardnaApotekaBasic dto)
         {
             try
             {
                 using var s = DataLayer.GetSession();
                 var pj = s.Load<Entiteti.StandardnaApoteka>(dto.Id);
+
+                var odgovorniFarmaceut = s.Get<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
+                
                 pj.Naziv = dto.Naziv;
                 pj.Ulica = dto.Ulica;
                 pj.Broj = dto.Broj;
                 pj.PostanskiBroj = dto.PostanskiBroj;
                 pj.Mesto = dto.Mesto;
-                pj.OdgovorniFarmaceut = dto.OdgovorniFarmaceut;
+                pj.OdgovorniFarmaceut = odgovorniFarmaceut;
                 
 
 
@@ -485,30 +499,35 @@ namespace FarmacyLibrary
                 s.Flush();
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
-        public static void IzmeniApoetkuSaLab(Entiteti.ApotekaSaLabBasic dto)
+        public static void IzmeniApotekuSaLab(ApotekaSaLabBasic dto)
         {
             try
             {
                 using var s = DataLayer.GetSession();
-                var pj = s.Load<Entiteti.ApotekaSaLabBasic>(dto.Id);
+                var pj = s.Load<Entiteti.ApotekaSaLab>(dto.Id);
+                var odgovorniFarmaceut = s.Get<Entiteti.Farmaceut>(dto.OdgovorniFarmaceutId);
+                if (odgovorniFarmaceut == null)
+                {
+                    throw new ArgumentException("Odgovorni farmaceut sa tim ID-em ne postoji!");
+                }
+                
                 pj.Naziv = dto.Naziv;
                 pj.Ulica = dto.Ulica;
                 pj.Broj = dto.Broj;
                 pj.PostanskiBroj = dto.PostanskiBroj;
                 pj.Mesto = dto.Mesto;
-                pj.OdgovorniFarmaceut = dto.OdgovorniFarmaceut;
-
-
+                pj.Napomena = dto.Napomena;
+                pj.OdgovorniFarmaceut = odgovorniFarmaceut;
 
                 s.Update(pj);
                 s.Flush();
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
@@ -517,7 +536,7 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                var pj = s.Get<Entiteti.ProdajnaJedinicaBasic>(id);
+                var pj = s.Get<Entiteti.ProdajnaJedinica>(id);
                 if (pj != null)
                 {
                     s.Delete(pj);
@@ -525,19 +544,49 @@ namespace FarmacyLibrary
                 }
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
         // ========== MENADŽER – APOTEKA ==========
+
+        public static void DodajMenadzerApoteka(MenadzerApotekaBasic dto)
+        {
+            try
+            {
+                using var s = DataLayer.GetSession();
+                var m = s.Get<Entiteti.Menadzer>(dto.IdMenadzera);
+                var p = s.Get<Entiteti.ProdajnaJedinica>(dto.ProdajnaJedinicaId);
+
+                var radnov = new MenadzerApoteka
+                {
+                    Menadzer=m,
+                    ProdajnaJedinica=p,
+                    Do=dto.Do,
+                    Od=dto.Od,
+                    datumKontrole=dto.datumKontrole,
+                };
+                   
+
+
+                s.Save(radnov);
+                s.Flush();
+
+                // Kontrola apoteke kreirana uspesno
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
 
         public static void DodeliMenadzeraApoteci(MenadzerApotekaBasic dto)
         {
             try
             {
                 using var s = DataLayer.GetSession();
-                var m = s.Load<Entiteti.MenadzerBasic>(dto.MBrMenadzera);
-                var pj = s.Load<Entiteti.ProdajnaJedinicaBasic>(dto.ProdajnaJedinicaId);
+                var m = s.Load<Entiteti.Menadzer>(dto.IdMenadzera);
+                var pj = s.Load<Entiteti.ProdajnaJedinica>(dto.ProdajnaJedinicaId);
 
                 var veza = new MenadzerApoteka
                 {
@@ -550,7 +599,11 @@ namespace FarmacyLibrary
                 s.Save(veza);
                 s.Flush();
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
         }
 
         public static IList<MenadzerApotekaBasic> VratiApotekeMenadzera(long mbrMenadzera)
@@ -560,17 +613,21 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var veze = s.Query<MenadzerApoteka>()
-                            .Where(x => x.Menadzer.MBr == mbrMenadzera).ToList();
+                    .Where(x => x.Menadzer.Id == mbrMenadzera).ToList();
 
                 list.AddRange(veze.Select(x => new MenadzerApotekaBasic
                 {
-                    MBrMenadzera = x.Menadzer.MBr,
+                    IdMenadzera = x.Menadzer.Id,
                     ProdajnaJedinicaId = x.ProdajnaJedinica.Id,
                     Od = x.Od,
                     Do = x.Do
                 }));
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -580,16 +637,20 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var ent = s.Query<MenadzerApoteka>()
-                           .FirstOrDefault(x => x.Menadzer.MBr == idM
-                                             && x.ProdajnaJedinica.Id == idA);
-                                            
+                    .FirstOrDefault(x => x.Menadzer.Id == idM
+                                         && x.ProdajnaJedinica.Id == idA);
+
                 if (ent != null)
                 {
                     s.Delete(ent);
                     s.Flush();
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
         }
 
         // ========== RADNO VREME ==========
@@ -674,7 +735,7 @@ namespace FarmacyLibrary
                 else
                 {
                     // Kreiraj novi zapis ako ne postoji
-                    var prodajnaJedinica = s.Query<Entiteti.ProdajnaJedinicaBasic>()
+                    var prodajnaJedinica = s.Query<Entiteti.ProdajnaJedinica>()
                         .FirstOrDefault(x => x.Id == dto.ProdajnaJedinicaId);
                     if (prodajnaJedinica != null)
                     {
@@ -707,7 +768,7 @@ namespace FarmacyLibrary
                 }
 
                 using var s = DataLayer.GetSession();
-                var prodajnaJedinica = s.Load<Entiteti.ProdajnaJedinicaBasic>(dto.ProdajnaJedinicaId);
+                var prodajnaJedinica = s.Load<Entiteti.ProdajnaJedinica>(dto.ProdajnaJedinicaId);
                 var rv = new RadnoVreme
                 {
                     ProdajnaJedinica = prodajnaJedinica,
@@ -771,7 +832,7 @@ namespace FarmacyLibrary
 
                 foreach (var x in rv)
                 {
-                    var z=DTOManagerZaposleni.VratiZaposlenog(x.Zaposleni.MBr);
+                    var z=DTOManagerZaposleni.VratiZaposlenog(x.Zaposleni.Id);
                     if(z is FarmaceutBasic f)
                     {
                         list.Add(f);
@@ -788,35 +849,6 @@ namespace FarmacyLibrary
             return list;
         }
 
-        public static IList<MenadzerBasic> VratiSveMenadzereUSistemu()
-        {
-            var list = new List<MenadzerBasic>();
-
-            try
-            {
-                using var s = DataLayer.GetSession();
-                var rv = s.Query<RasporedRada>().ToList();
-
-
-
-                foreach (var x in rv)
-                {
-                    var z = DTOManagerZaposleni.VratiZaposlenog(x.Zaposleni.MBr);
-                    if (z is MenadzerBasic f)
-                    {
-                        list.Add(f);
-                    }
-
-                }
-
-                return list;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Greška pri učitavanju radnog vremena: " + ex.Message);
-            }
-            return list;
-        }
         public static IList<FarmaceutBasic> VratiSveFarmaceuteZaApoteku(long id)
         {
             var list = new List<FarmaceutBasic>();
@@ -833,7 +865,7 @@ namespace FarmacyLibrary
 
                 foreach (var x in rv)
                 {
-                    var z = DTOManagerZaposleni.VratiZaposlenog(x.Zaposleni.MBr);
+                    var z = DTOManagerZaposleni.VratiZaposlenog(x.Zaposleni.Id);
                     if (z is FarmaceutBasic f)
                     {
                         list.Add(f);

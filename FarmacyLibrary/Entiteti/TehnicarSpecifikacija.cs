@@ -12,8 +12,8 @@
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
 
-            var thisMbr = Tehnicar?.MBr;
-            var otherMbr = other.Tehnicar?.MBr;
+            var thisMbr = Tehnicar?.Id;
+            var otherMbr = other.Tehnicar?.Id;
 
             return Equals(thisMbr, otherMbr)
                 && string.Equals(Naziv, other.Naziv, StringComparison.Ordinal);
@@ -26,7 +26,7 @@
             unchecked
             {
                 int h = 17;
-                h = h * 23 + (Tehnicar?.MBr.GetHashCode() ?? 0);
+                h = h * 23 + (Tehnicar?.Id.GetHashCode() ?? 0);
                 h = h * 23 + (Naziv?.GetHashCode() ?? 0);
                 return h;
             }

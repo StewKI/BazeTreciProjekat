@@ -1,23 +1,97 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ZalihaController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpGet]
-    [Route("apoteka/{idApoteke}")]
-    public IActionResult GetZaliheApoteke(long idApoteke)
+    [ApiController]
+    [Route("[controller]")]
+    public class ZalihaController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetZalihe()
         {
-            return new JsonResult(DTOManagerIsporukeZalihe.VratiZaliheApoteke(idApoteke));
+            try
+            {
+                return new JsonResult(DTOManagerIsporukeZalihe.VratiSveZalihe());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpGet("apoteka/{prodajnaJedinicaId}")]
+        public IActionResult GetZaliheApoteke(long prodajnaJedinicaId)
         {
-            return BadRequest(ex.Message);
+            try
+            {
+                return new JsonResult(DTOManagerIsporukeZalihe.VratiZaliheApoteke(prodajnaJedinicaId));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("{prodajnaJedinicaId}/{pakovanjeId}")]
+        public IActionResult GetZaliha(long prodajnaJedinicaId, long pakovanjeId)
+        {
+            try
+            {
+                var zaliha = DTOManagerIsporukeZalihe.VratiZalihu(prodajnaJedinicaId, pakovanjeId);
+                if (zaliha == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(zaliha);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult PostZaliha([FromBody] ZalihaBasic zaliha)
+        {
+            try
+            {
+                DTOManagerIsporukeZalihe.DodajZalihu(zaliha);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult PutZaliha([FromBody] ZalihaBasic zaliha)
+        {
+            try
+            {
+                DTOManagerIsporukeZalihe.IzmeniZalihu(zaliha);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{prodajnaJedinicaId}/{pakovanjeId}")]
+        public IActionResult DeleteZaliha(long prodajnaJedinicaId, long pakovanjeId)
+        {
+            try
+            {
+                DTOManagerIsporukeZalihe.ObrisiZalihu(prodajnaJedinicaId, pakovanjeId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

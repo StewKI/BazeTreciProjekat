@@ -1,51 +1,70 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class FarmaceutController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpGet]
-    [Route("{id:long}")]
-    public IActionResult GetOdgFarmaceut(long id)
+    [ApiController]
+    [Route("[controller]")]
+    public class FarmaceutController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetFarmaceuti()
         {
-            return new JsonResult(DTOManagerZaposleni.VratiOdgovornogFarmaceuta(id));
+            try
+            {
+                return new JsonResult(DTOManagerProdajneJedinice.VratiSveFarmaceuteUSistemu());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-    }
 
-    [HttpPost]
-    public IActionResult AddFarmaceut([FromBody] FarmaceutBasic dto)
-    {
-        try
+        [HttpGet("{id}")]
+        public IActionResult GetFarmaceut(long id)
         {
-            DTOManagerZaposleni.DodajFarmaceuta(dto);
+            try
+            {
+                var farmaceut = DTOManagerZaposleni.VratiFarmaceuta(id);
+                if (farmaceut == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(farmaceut);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Created();
-    }
 
-    [HttpPut]
-    public IActionResult ChangeFarmaceut([FromBody] FarmaceutBasic dto)
-    {
-        try
+        [HttpPost]
+        public IActionResult AddFarmaceut([FromBody] FarmaceutBasic dto)
         {
-            DTOManagerZaposleni.UpdateFarmaceuta(dto);
+            try
+            {
+                DTOManagerZaposleni.DodajFarmaceuta(dto);
+                return CreatedAtAction(nameof(GetFarmaceut), new { id = dto.Id }, dto);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpPut]
+        public IActionResult ChangeFarmaceut([FromBody] FarmaceutBasic dto)
         {
-            return BadRequest(ex.ToString());
+            try
+            {
+                DTOManagerZaposleni.UpdateFarmaceuta(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        return Ok();
     }
 }

@@ -1,38 +1,40 @@
 using FarmacyLibrary;
 using FarmacyLibrary.Entiteti;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class StandardnaApotekaController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpPost]
-    public IActionResult AddStandApoteka([FromBody] StandardnaApoteka dto)
+    [ApiController]
+    [Route("[controller]")]
+    public class StandardnaApotekaController : ControllerBase
     {
-        try
+        [HttpPost]
+        public IActionResult AddStandardnaApoteka([FromBody] StandardnaApotekaBasic dto)
         {
-            DTOManagerProdajneJedinice.DodajStandardnuApoteku(dto);
+            try
+            {
+                DTOManagerProdajneJedinice.DodajStandardnuApoteku(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Created();
-    }
 
-    [HttpPut]
-    public IActionResult ChangeStandApoteka([FromBody] StandardnaApoteka dto)
-    {
-        try
+        [HttpPut]
+        public IActionResult ChangeStandardnaApoteka([FromBody] StandardnaApotekaBasic dto)
         {
-            DTOManagerProdajneJedinice.IzmeniSApoetku(dto);
+            try
+            {
+                DTOManagerProdajneJedinice.IzmeniSApoetku(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Ok();
     }
 }

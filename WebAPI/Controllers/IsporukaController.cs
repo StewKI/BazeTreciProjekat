@@ -1,5 +1,6 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.Controllers;
 
@@ -12,12 +13,12 @@ public class IsporukaController : ControllerBase
     {
         try
         {
-            DTOManagerIsporukeZalihe.KreirajIsporuku(dto);
+            var id = DTOManagerIsporukeZalihe.KreirajIsporuku(dto);
+            return Ok(new { Id = id });
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.ToString());
+            return BadRequest(ex.Message);
         }
-        return Created();
     }
 }

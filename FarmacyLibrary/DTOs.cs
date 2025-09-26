@@ -3,13 +3,14 @@
 
     public class ZaposleniBasic
     {
-        public long MBr { get; set; }
+        public long Id { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public DateTime DatumRodj { get; set; }
         public string Adresa { get; set; }
         public string Telefon { get; set; }
         public DateTime DatumZaposlenja { get; set; }
+        public string MatBr { get; set; }
     }
 
     public class FarmaceutBasic : ZaposleniBasic
@@ -29,7 +30,7 @@
 
     public class TehnicarSertifikacijaBasic
     {
-        public long MBrTehnicara { get; set; }
+        public long IdTehnicara { get; set; }
         public string Naziv { get; set; }
         public DateTime Datum { get; set; }
     }
@@ -45,12 +46,29 @@
         public string Broj { get; set; }
         public string PostanskiBroj { get; set; }
         public string Mesto { get; set; }
-        public long OdgovorniFarmaceutMbr { get; set; }
+        public long OdgovorniFarmaceutId { get; set; }
     }
 
+    public class StandardnaApotekaBasic : ProdajnaJedinicaBasic
+    {
+        public string? Napomena { get; set; }
+    }
+
+    
+    public class SpecijalizovanaApotekaBasic : ProdajnaJedinicaBasic
+    {
+        public string? SpecijalnostTipa { get; set; }
+        public string? Napomena { get; set; }
+    }
+
+    public class ApotekaSaLabBasic : ProdajnaJedinicaBasic
+    {
+        public string? Napomena { get; set; }
+    }
+    
     public class MenadzerApotekaBasic
     {
-        public long MBrMenadzera { get; set; }
+        public long IdMenadzera { get; set; }
         public long ProdajnaJedinicaId { get; set; }
         public DateTime Od { get; set; }
         public DateTime? Do { get; set; }
@@ -136,7 +154,7 @@
         public long DistributerId { get; set; }
         public long ProdajnaJedinicaId { get; set; }
         public DateTime Datum { get; set; }
-        public long? MagacionerMbr { get; set; }
+        public long? MagacionerId { get; set; }
         public IList<IsporukaStavkaBasic> Stavke { get; set; } = new List<IsporukaStavkaBasic>();
     }
 
@@ -146,7 +164,7 @@
         public long PakovanjeId { get; set; }
         public int Kolicina { get; set; }
         public DateTime? DatumPoslednjeIsporuke { get; set; }
-        public long? OdgovorniMagacionerMbr { get; set; }
+        public long? OdgovorniMagacionerId { get; set; }
     }
 
     public class ProdajaBasic
@@ -154,7 +172,7 @@
         public long Id { get; set; }
         public long ProdajnaJedinicaId { get; set; }
         public DateTime DatumVreme { get; set; }
-        public long? BlagajnikMbr { get; set; }
+        public long? BlagajnikId { get; set; }
         public string ProdajnaJedinicaNaziv { get; set; }
         public string BlagajnikIme { get; set; }
         public decimal UkupnaVrednost { get; set; }
@@ -188,7 +206,7 @@
 
     public class RasporedRadaBasic
     {
-        public virtual long MBr { get; set; }
+        public virtual long Id { get; set; }
         public virtual long ProdajnaJedinicaId { get; set; }
         public virtual DateTime Pocetak { get; set; }
         public virtual DateTime Kraj { get; set; }
@@ -208,5 +226,16 @@
         public string NazivUstanove { get; set; }
         public DateTime? RealizacijaDatum { get; set; }
         public string PrikazniNaziv => $"{SerijskiBroj} - {NazivUstanove} ({Status})";
+    }
+
+
+    public class ReceptStavkaBasic
+    {
+        
+        public virtual string ReceptSerijskiBroj { get; set; } = default!;
+        public virtual long PakovanjeId { get; set; } = default!;
+        public virtual int Kolicina { get; set; }
+        public virtual string? PreporucenaDoza { get; set; }
+
     }
 }

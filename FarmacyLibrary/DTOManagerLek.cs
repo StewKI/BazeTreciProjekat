@@ -31,7 +31,11 @@ namespace FarmacyLibrary
                 dto.Id = p.Id;
                 return p.Id;
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return 0;
         }
 
@@ -46,7 +50,11 @@ namespace FarmacyLibrary
                 dto.Id = g.Id;
                 return g.Id;
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return 0;
         }
 
@@ -62,7 +70,7 @@ namespace FarmacyLibrary
                 return k.Id;
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return 0;
         }
@@ -103,7 +111,7 @@ namespace FarmacyLibrary
                 return lek.Id;
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
 
             }
             return 0;
@@ -122,7 +130,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return 0;
         }
@@ -149,7 +157,7 @@ namespace FarmacyLibrary
                 return p.Id;
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return 0;
         }
@@ -161,7 +169,7 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var pakovanja = s.Query<Pakovanje>().ToList();
-                
+
                 // Force loading of related entities within the session
                 foreach (var p in pakovanja)
                 {
@@ -171,7 +179,11 @@ namespace FarmacyLibrary
                     list.Add(p);
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -191,7 +203,10 @@ namespace FarmacyLibrary
                 
                 return pakovanje;
             }
-            catch (Exception) { }
+            catch (Exception ex) 
+            {
+                throw new Exception(ex.Message); 
+            }
             return null;
         }
 
@@ -265,8 +280,9 @@ namespace FarmacyLibrary
                 return lek; // Vraća direktno entitet
             }
             catch (Exception ex)
-            {
-                // Error handling - message box removed
+            {                    
+                throw new Exception(ex.Message);
+
             }
             return null;
         }
@@ -297,7 +313,8 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
+
             }
             return null;
         }
@@ -311,9 +328,9 @@ namespace FarmacyLibrary
                 foreach (var l in lekovi)
                 {
                     var secIds = s.Query<LekSekundarna>()
-                                  .Where(x => x.Lek.Id == l.Id)
-                                  .Select(x => x.Kategorija.Id)
-                                  .ToList();
+                        .Where(x => x.Lek.Id == l.Id)
+                        .Select(x => x.Kategorija.Id)
+                        .ToList();
 
                     list.Add(new LekBasic
                     {
@@ -327,12 +344,16 @@ namespace FarmacyLibrary
                     });
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
-        public static IList<Oblik> VratiSveOblikeLekova()
+        public static IList<OblikBasic> VratiSveOblikeLekova()
         {
-            var list = new List<Oblik>();
+            var list = new List<OblikBasic>();
             try
             {
                 using var s = DataLayer.GetSession();
@@ -340,17 +361,21 @@ namespace FarmacyLibrary
 
                 foreach (var l in lekovi)
                 {
-                    list.Add(new Oblik
+                    list.Add(new OblikBasic
                     {
                         Id = l.Id,
-                        Naziv =l.Naziv,
+                        Naziv = l.Naziv,
 
                     });
                 }
-                    
-                
+
+
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -362,7 +387,11 @@ namespace FarmacyLibrary
                 var oblik = s.Get<Oblik>(id);
                 return oblik;
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return null;
         }
 
@@ -381,22 +410,12 @@ namespace FarmacyLibrary
                     };
                 }
             }
-            catch (Exception) { }
-            return null;
-        }
-
-        public static void IzmeniOblik(Oblik oblik)
-        {
-            try
-            {
-                using var s = DataLayer.GetSession();
-                s.Update(oblik);
-                s.Flush();
-            }
             catch (Exception ex)
             {
-                throw new Exception("Greška pri izmeni oblika: " + ex.Message);
+                
+                throw new Exception(ex.Message);
             }
+            return null;
         }
 
         public static void IzmeniOblik(OblikBasic dto)
@@ -488,7 +507,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
@@ -519,7 +538,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
         }
 
@@ -534,12 +553,16 @@ namespace FarmacyLibrary
                 {
                     list.Add(new PrimarnaGrupaBasic
                     {
-                       Naziv=z.Naziv,   
-                       Id=z.Id,
+                        Naziv = z.Naziv,
+                        Id = z.Id,
                     });
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -558,7 +581,11 @@ namespace FarmacyLibrary
                     };
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return null;
         }
 
@@ -618,7 +645,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             return null;
         }
@@ -641,7 +668,7 @@ namespace FarmacyLibrary
                 // Uspesno je dodata kategorija
             }
             catch (Exception ex) {
-                // Error handling - message box removed
+                throw new Exception(ex.Message);
             }
             
         }

@@ -18,7 +18,7 @@ namespace FarmacyLibrary.Mapiranja
                 .CustomType<TimestampType>()                           // was "timestamp"
                 .Not.Nullable();
 
-            References(x => x.Blagajnik, "blagajnik_mbr").Nullable();
+            References(x => x.Blagajnik, "blagajnik_id").Nullable();
 
             HasMany(x => x.Stavke)
                 .KeyColumn("prodaja_id")

@@ -19,9 +19,9 @@ namespace FarmacyLibrary
 
                 var prodaja = new Prodaja
                 {
-                    ProdajnaJedinica = s.Get<Entiteti.ProdajnaJedinicaBasic>(prodajaDto.ProdajnaJedinicaId),
+                    ProdajnaJedinica = s.Get<Entiteti.ProdajnaJedinica>(prodajaDto.ProdajnaJedinicaId),
                     DatumVreme = prodajaDto.DatumVreme,
-                    Blagajnik = prodajaDto.BlagajnikMbr.HasValue ? s.Load<Zaposleni>(prodajaDto.BlagajnikMbr.Value) : null
+                    Blagajnik = prodajaDto.BlagajnikId.HasValue ? s.Load<Zaposleni>(prodajaDto.BlagajnikId.Value) : null
                 };
 
                 s.Save(prodaja);
@@ -88,9 +88,9 @@ namespace FarmacyLibrary
 
                 var prodaja = new Prodaja
                 {
-                    ProdajnaJedinica = s.Get<Entiteti.ProdajnaJedinicaBasic>(prodajaDto.ProdajnaJedinicaId),
+                    ProdajnaJedinica = s.Get<Entiteti.ProdajnaJedinica>(prodajaDto.ProdajnaJedinicaId),
                     DatumVreme = prodajaDto.DatumVreme,
-                    Blagajnik = prodajaDto.BlagajnikMbr.HasValue ? s.Load<Zaposleni>(prodajaDto.BlagajnikMbr.Value) : null
+                    Blagajnik = prodajaDto.BlagajnikId.HasValue ? s.Load<Zaposleni>(prodajaDto.BlagajnikId.Value) : null
                 };
 
                 s.Save(prodaja);
@@ -167,7 +167,11 @@ namespace FarmacyLibrary
                     });
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -178,9 +182,9 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var zalihe = s.Query<Zaliha>()
-                              .Where(x => x.ProdajnaJedinica.Id == prodajnaJedinicaId && x.Kolicina > 0)
-                              .ToList();
-                
+                    .Where(x => x.ProdajnaJedinica.Id == prodajnaJedinicaId && x.Kolicina > 0)
+                    .ToList();
+
                 foreach (var z in zalihe)
                 {
                     list.Add(new PakovanjeBasic
@@ -199,7 +203,11 @@ namespace FarmacyLibrary
                     });
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -215,7 +223,7 @@ namespace FarmacyLibrary
                 {
                     list.Add(new ZaposleniBasic
                     {
-                        MBr = b.MBr,
+                        Id = b.Id,
                         Ime = b.Ime,
                         Prezime = b.Prezime,
                         DatumRodj = b.DatumRodj,
@@ -225,7 +233,11 @@ namespace FarmacyLibrary
                     });
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
 
@@ -249,7 +261,11 @@ namespace FarmacyLibrary
                     });
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                
+                throw new Exception(ex.Message);
+            }
             return list;
         }
     }

@@ -1,66 +1,67 @@
+
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class MenadzerApotekaController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpGet]
-    [Route("menadzer/{idMenadzera:long}")]
-    public IActionResult GetApotekeZaMenadzera(long idMenadzera)
+    [ApiController]
+    [Route("[controller]")]
+    public class MenadzerApotekaController : ControllerBase
     {
-        try
+        [HttpPost]
+        public IActionResult AddMenadzerApoteka([FromBody] MenadzerApotekaBasic dto)
         {
-            return new JsonResult(DTOManagerProdajneJedinice.VratiApotekeMenadzera(idMenadzera));
+            try
+            {
+                DTOManagerProdajneJedinice.DodajMenadzerApoteka(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-    }
 
-    [HttpPost]
-    public IActionResult AddMenadzerApoteka([FromBody] MenadzerApotekaBasic dto)
-    {
-        try
+        [HttpPut]
+        public IActionResult UpdateMenadzerApoteka([FromBody] MenadzerApotekaBasic dto)
         {
-            DTOManagerProdajneJedinice.DodeliMenadzeraApoteci(dto);
+            try
+            {
+                DTOManagerProdajneJedinice.IzmeniMenadzerApoteka(dto);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Created();
-    }
 
-    [HttpPut]
-    public IActionResult ChangeMenadzerApoteka([FromBody] MenadzerApotekaBasic dto)
-    {
-        try
+        [HttpGet("menadzer/{id}")]
+        public IActionResult GetApotekeMenadzera(long id)
         {
-            DTOManagerProdajneJedinice.IzmeniMenadzerApoteka(dto);
+            try
+            {
+                return new JsonResult(DTOManagerProdajneJedinice.VratiApotekeMenadzera(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Ok();   
-    }
 
-    [HttpDelete]
-    [Route("{menadzer_id:long}/{apoteka_id:long}")]
-    public IActionResult DeleteMenadzerApoteka(long menadzer_id, long apoteka_id)
-    {
-        try
+        [HttpDelete("{idApoteke}/menadzer/{idMenadzera}")]
+        public IActionResult DeleteMenadzerApoteka(long idApoteke, long idMenadzera)
         {
-            DTOManagerProdajneJedinice.UkloniMenadzeraSaApoteke(apoteka_id, menadzer_id);
+            try
+            {
+                DTOManagerProdajneJedinice.UkloniMenadzeraSaApoteke(idApoteke, idMenadzera);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.ToString());
-        }
-        return Ok();  
     }
 }

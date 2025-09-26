@@ -15,13 +15,12 @@ public class TehnicarSertifikacijaMap : ClassMap<TehnicarSertifikacija>
     {
         Table("Tehnicar_sertifikacija");
 
-        // PK: (m_br_tehnicara, naziv)
         CompositeId()
-            .KeyReference(x => x.Tehnicar, "m_br_tehnicara")
+            .KeyReference(x => x.Tehnicar, "id_tehnicara")
             .KeyProperty(x => x.Naziv, "naziv");
 
         Map(x => x.Datum, "datum")
-            .CustomType<DateType>()       // Oracle DATE
+            .CustomType<DateType>()
             .Not.Nullable();
     }
 }

@@ -19,7 +19,7 @@ namespace FarmacyLibrary.Mapiranja
 
             References(x => x.RealizovanaProdajnaJedinica, "realiz_prod_jed_id").Nullable();
             Map(x => x.RealizacijaDatum, "realizacija_datum").CustomType<DateType>().Nullable(); // was "date"
-            References(x => x.RealizovaoFarmaceut, "realizovao_farmaceut_mbr").Nullable();
+            References(x => x.RealizovaoFarmaceut, "realizovao_farmaceut_id").Nullable();
         }
     }
 }

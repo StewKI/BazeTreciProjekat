@@ -1,36 +1,98 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class LekController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpGet]
-    public IActionResult GetLekovi()
+    [ApiController]
+    [Route("[controller]")]
+    public class LekController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetLekovi()
         {
-            return new JsonResult(DTOManagerLek.VratiSveLekove());
+            try
+            {
+                return new JsonResult(DTOManagerLek.VratiSveLekove());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
-    }
 
-    [HttpPost]
-    public IActionResult AddLek([FromBody] LekBasic dto)
-    {
-        try
+        [HttpGet("{id}")]
+        public IActionResult GetLek(long id)
         {
-            DTOManagerLek.DodajLek(dto);
+            try
+            {
+                var lek = DTOManagerLek.VratiLek(id);
+                if (lek == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(lek);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpPost]
+        public IActionResult PostLek([FromBody] LekBasic lek)
         {
-            return BadRequest(ex.Message);
+            try
+            {
+                var lekId = DTOManagerLek.DodajLek(lek);
+                return CreatedAtAction(nameof(GetLek), new { id = lekId }, lek);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        return Ok();
+
+        [HttpPut]
+        public IActionResult PutLek([FromBody] LekBasic lek)
+        {
+            try
+            {
+                DTOManagerLek.IzmeniLek(lek);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteLek(long id)
+        {
+            try
+            {
+                DTOManagerLek.ObrisiLek(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("{lekId}/sekundarnakategorija/{skId}")]
+        public IActionResult DodajLekSekundarna(long lekId, long skId)
+        {
+            try
+            {
+                DTOManagerLek.DodajLekSekundarna(skId, lekId);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

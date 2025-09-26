@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FarmacyLibrary", "FarmacyLibrary\FarmacyLibrary.csproj", "{54185594-0AF6-402E-BB14-C32CD07168E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFarmacyLibrary", "TestFarmacyLibrary\TestFarmacyLibrary.csproj", "{82B0B5CD-1732-4D8F-8780-825E5E149D5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{54185594-0AF6-402E-BB14-C32CD07168E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54185594-0AF6-402E-BB14-C32CD07168E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54185594-0AF6-402E-BB14-C32CD07168E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B0B5CD-1732-4D8F-8780-825E5E149D5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B0B5CD-1732-4D8F-8780-825E5E149D5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B0B5CD-1732-4D8F-8780-825E5E149D5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B0B5CD-1732-4D8F-8780-825E5E149D5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

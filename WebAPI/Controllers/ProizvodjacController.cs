@@ -1,23 +1,84 @@
 using FarmacyLibrary;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace WebAPI.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class ProizvodjacController : ControllerBase
+namespace WebAPI.Controllers
 {
-    [HttpPost]
-    public IActionResult AddProizvodjac([FromBody] ProizvodjacBasic dto)
+    [ApiController]
+    [Route("[controller]")]
+    public class ProizvodjacController : ControllerBase
     {
-        try
+        [HttpGet]
+        public IActionResult GetProizvodjaci()
         {
-            DTOManagerLek.DodajProizvodjaca(dto);
+            try
+            {
+                return new JsonResult(DTOManagerIsporukeZalihe.VratiSveProizvodjace());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        [HttpGet("{id}")]
+        public IActionResult GetProizvodjac(long id)
         {
-            return BadRequest(ex.ToString());
+            try
+            {
+                var proizvodjac = DTOManagerIsporukeZalihe.VratiProizvodjaca(id);
+                if (proizvodjac == null)
+                {
+                    return NotFound();
+                }
+                return new JsonResult(proizvodjac);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        return Created();
+
+        [HttpPost]
+        public IActionResult PostProizvodjac([FromBody] ProizvodjacBasic proizvodjac)
+        {
+            try
+            {
+                DTOManagerIsporukeZalihe.DodajProizvodjaca(proizvodjac);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult PutProizvodjac([FromBody] ProizvodjacBasic proizvodjac)
+        {
+            try
+            {
+                DTOManagerIsporukeZalihe.IzmeniProizvodjaca(proizvodjac);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProizvodjac(long id)
+        {
+            try
+            {
+                DTOManagerIsporukeZalihe.ObrisiProizvodjaca(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
