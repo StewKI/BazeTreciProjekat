@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var pakovanje = DTOManagerLek.VratiPakovanje(id);
                 if (pakovanje == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Pakovanje sa ID {id} nije pronađeno.");
                 }
                 return new JsonResult(pakovanje);
             }

@@ -10,7 +10,7 @@ GET {{hostname}}/ProdajnaJedinica/osnovne
 GET {{hostname}}/ProdajnaJedinica/31
 
 ### Get prodajna jedinica tip by id
-GET {{hostname}}/ProdajnaJedinica/tip/14
+GET {{hostname}}/ProdajnaJedinica/tip/109
 
 ### Create prodajna jedinica
 POST {{hostname}}/ProdajnaJedinica
@@ -22,7 +22,7 @@ Content-Type: application/json
   "broj": "30",
   "postanskiBroj": "11000",
   "mesto": "Beograd",
-  "odgovorniFarmaceutMbr": 1
+  "odgovorniFarmaceutId": 1
 }
 
 ### Update prodajna jedinica
@@ -30,13 +30,13 @@ PUT {{hostname}}/ProdajnaJedinica
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 111,
   "naziv": "Izmenjena Prodajna Jedinica",
   "ulica": "Ulica 4",
   "broj": "40",
   "postanskiBroj": "11000",
   "mesto": "Beograd",
-  "odgovorniFarmaceutMbr": 1
+  "odgovorniFarmaceutId": 1
 }
 
 ### Delete prodajna jedinica
@@ -46,14 +46,14 @@ DELETE {{hostname}}/ProdajnaJedinica/1
 GET {{hostname}}/ProdajnaJedinica/1/radnovreme
 
 ### Get radno vreme for dan
-GET {{hostname}}/ProdajnaJedinica/1/radnovreme/1
+GET {{hostname}}/ProdajnaJedinica/100/radnovreme/1
 
 ### Add radno vreme
 POST {{hostname}}/ProdajnaJedinica/radnovreme
 Content-Type: application/json
 
 {
-  "prodajnaJedinicaId": 1,
+  "prodajnaJedinicaId": 100,
   "dan": 1,
   "vremeOd": "08:00:00",
   "vremeDo": "16:00:00"

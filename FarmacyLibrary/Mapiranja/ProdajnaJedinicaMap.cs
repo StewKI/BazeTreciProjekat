@@ -7,7 +7,7 @@ namespace FarmacyLibrary.Mapiranja
         public ProdajnaJedinicaMap()
         {
             Table("Prodajna_jedinica");
-            Id(x => x.Id, "id").GeneratedBy.Identity();
+            Id(x => x.Id, "id").GeneratedBy.Sequence("PRODAJNA_JEDINICA_SEQ");
             Map(x => x.Naziv, "naziv").Not.Nullable();
             Map(x => x.Ulica, "ulica").Not.Nullable();
             Map(x => x.Broj, "broj").Not.Nullable();

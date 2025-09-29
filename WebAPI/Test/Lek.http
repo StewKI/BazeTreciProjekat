@@ -4,7 +4,7 @@
 GET {{hostname}}/Lek
 
 ### Get lek by id
-GET {{hostname}}/Lek/10
+GET {{hostname}}/Lek/18
 
 ### Create lek
 POST {{hostname}}/Lek

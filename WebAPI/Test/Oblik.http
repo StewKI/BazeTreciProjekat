@@ -4,7 +4,7 @@
 GET {{hostname}}/Oblik
 
 ### Get oblik by id
-GET {{hostname}}/Oblik/61
+GET {{hostname}}/Oblik/62
 
 ### Create oblik
 POST {{hostname}}/Oblik
@@ -19,9 +19,9 @@ PUT {{hostname}}/Oblik
 Content-Type: application/json
 
 {
-  "id": 61,
+  "id": 81,
   "naziv": "Izmenjen Oblik"
 }
 
 ### Delete oblik
-DELETE {{hostname}}/Oblik/61
+DELETE {{hostname}}/Oblik/81

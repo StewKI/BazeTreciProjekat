@@ -37,7 +37,7 @@ namespace FarmacyLibrary
                 };
                 s.Save(f);
                 s.Flush();
-                
+
                 // Ažuriraj MBr u DTO-u
                 dto.Id = f.Id;
             }
@@ -101,7 +101,7 @@ namespace FarmacyLibrary
                 };
                 s.Save(t);
                 s.Flush();
-                
+
                 // Ažuriraj MBr u DTO-u
                 dto.Id = t.Id;
 
@@ -176,7 +176,7 @@ namespace FarmacyLibrary
                 };
                 s.Save(m);
                 s.Flush();
-                
+
                 // Ažuriraj MBr u DTO-u
                 dto.Id = m.Id;
             }
@@ -234,7 +234,7 @@ namespace FarmacyLibrary
                 };
                 s.Save(m);
                 s.Flush();
-                
+
                 // Ažuriraj MBr u DTO-u
                 dto.Id = m.Id;
             }
@@ -532,7 +532,7 @@ namespace FarmacyLibrary
             }
             catch (Exception ex)
             {
-                
+
                 throw new Exception(ex.Message);
             }
             return list;
@@ -544,7 +544,7 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var selektovaniZaposleni = VratiZaposlenog(mbr);
-                
+
                 if (selektovaniZaposleni is FarmaceutBasic faramaceut)
                 {
                     var z = s.Get<Entiteti.Farmaceut>(mbr);
@@ -552,10 +552,10 @@ namespace FarmacyLibrary
                         .Where(p => p.OdgovorniFarmaceut == z)
                         .ToList();
 
-                    if(p.Count > 0)
+                    if (p.Count > 0)
                     {
-                     
-                         throw new Exception($"Farmaceut je odgovran za apoteku {p[0].Naziv}, pa ne moze biti izbrisan!");
+
+                        throw new Exception($"Farmaceut je odgovran za apoteku {p[0].Naziv}, pa ne moze biti izbrisan!");
                     }
 
 
@@ -564,12 +564,12 @@ namespace FarmacyLibrary
                 {
 
                     var z = s.Get<Tehnicar>(mbr);
-                    var sertifikacije=s.Query<Entiteti.TehnicarSertifikacija>().
-                                        Where(p=>p.Tehnicar==z)
+                    var sertifikacije = s.Query<Entiteti.TehnicarSertifikacija>().
+                                        Where(p => p.Tehnicar == z)
                                         .ToList();
-                    if(sertifikacije.Count > 0)
+                    if (sertifikacije.Count > 0)
                     {
-                        foreach(var s1  in sertifikacije)
+                        foreach (var s1 in sertifikacije)
                         {
                             s.Delete(s1);
                             s.Flush();
@@ -584,11 +584,11 @@ namespace FarmacyLibrary
                 {
                     var z = s.Get<Entiteti.Menadzer>(mbr);
                     var odgovran = s.Query<Entiteti.MenadzerApoteka>()
-                                    .Where(m=>m.Menadzer==z)
+                                    .Where(m => m.Menadzer == z)
                                     .ToList();
-                    if( odgovran.Count > 0 )
+                    if (odgovran.Count > 0)
                     {
-                        foreach(var m in odgovran)
+                        foreach (var m in odgovran)
                         {
                             s.Delete(m);
                             s.Flush();
@@ -600,9 +600,9 @@ namespace FarmacyLibrary
                 }
 
                 var z1 = s.Get<Entiteti.Zaposleni>(mbr);
-                
 
-                var ras=s.Query<RasporedRada>().Where(r=>r.Zaposleni==z1).ToList();
+
+                var ras = s.Query<RasporedRada>().Where(r => r.Zaposleni == z1).ToList();
 
                 if (ras.Count > 0)
                 {
@@ -622,21 +622,21 @@ namespace FarmacyLibrary
                 }
                 // Zaposleni uspesno obirsan.
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
 
-        public static void IzmeniRadnoMesto(long mbr,long idRadnogMesta,int smena1)
+        public static void IzmeniRadnoMesto(long mbr, long idRadnogMesta, int smena1)
         {
             try
             {
                 using var s = DataLayer.GetSession();
-                var raspored=s.Query<RasporedRada>()
-                    .Where(r => r.Zaposleni.Id==mbr).FirstOrDefault();
+                var raspored = s.Query<RasporedRada>()
+                    .Where(r => r.Zaposleni.Id == mbr).FirstOrDefault();
 
-                
+
 
                 var novi = new RasporedRadaBasic
                 {
@@ -651,7 +651,7 @@ namespace FarmacyLibrary
                 s.Flush();
 
                 DodajRasporedRada(novi);
-                
+
                 // Promena radnog mesta uspesna
             }
             catch (Exception ex)
@@ -668,7 +668,7 @@ namespace FarmacyLibrary
                 var raspored = s.Query<RasporedRada>()
                     .Where(r => r.Zaposleni.Id == mbr).FirstOrDefault();
 
-                
+
 
 
 
@@ -725,21 +725,21 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
-                
+
                 // Proveri da li zaposleni postoji
-                var zaposleni = s.Get<Zaposleni>(dto.Id);
+                var zaposleni = s.Get<Zaposleni>(dto.IdZaposlenog);
                 if (zaposleni == null)
                 {
-                    return;
+                    throw new Exception($"Zaposleni sa ID {dto.IdZaposlenog} nije pronađen.");
                 }
-                
+
                 // Proveri da li prodajna jedinica postoji
                 var prodajnaJedinica = s.Get<Entiteti.ProdajnaJedinica>(dto.ProdajnaJedinicaId);
                 if (prodajnaJedinica == null)
                 {
-                    return;
+                    throw new Exception($"Prodajna jedinica sa ID {dto.ProdajnaJedinicaId} nije pronađena.");
                 }
-                
+
                 var raspored = new RasporedRada
                 {
                     Zaposleni = zaposleni,
@@ -748,7 +748,7 @@ namespace FarmacyLibrary
                     Kraj = dto.Kraj,
                     BrojSmene = dto.BrojSmene
                 };
-                
+
                 s.Save(raspored);
                 s.Flush();
             }
@@ -775,7 +775,7 @@ namespace FarmacyLibrary
                         ZaposleniIme = rr.Zaposleni.Ime,
                         ZaposleniPrezime = rr.Zaposleni.Prezime,
                         ProdajnaJedinicaNaziv = rr.ProdajnaJedinica.Naziv,
-                        SmenaNaziv = rr.BrojSmene == null ? "Nije dodeljena" : 
+                        SmenaNaziv = rr.BrojSmene == null ? "Nije dodeljena" :
                                    rr.BrojSmene == 1 ? "Prva smena" :
                                    rr.BrojSmene == 2 ? "Druga smena" : "Treća smena"
                     });
@@ -789,97 +789,73 @@ namespace FarmacyLibrary
 
         public static IList<RasporedRadaBasic> VratiRasporedRadaZaProdajnuJedinicu(long prodajnaJedinicaId)
         {
-            try
-            {
-                using var s = DataLayer.GetSession();
-                
-                // Privremeno rešenje - direktan SQL upit dok se ne restaruje aplikacija
-                var sql = @"
-                    SELECT rr.m_br, rr.prodajna_jedinica_id, rr.pocetak, rr.kraj, rr.broj_smene,
-                           z.ime, z.prezime, pj.naziv
-                    FROM Raspored_rada rr
-                    LEFT JOIN Zaposleni z ON rr.m_br = z.m_br
-                    LEFT JOIN Prodajna_Jedinica pj ON rr.prodajna_jedinica_id = pj.id
-                    WHERE rr.prodajna_jedinica_id = :p0";
-                
-                var query = s.CreateSQLQuery(sql)
-                    .SetParameter("p0", prodajnaJedinicaId);
-                
-                var results = query.List();
-                var rasporedList = new List<RasporedRadaBasic>();
-                
-                foreach (object[] row in results)
-                {
-                    var raspored = new RasporedRadaBasic
-                    {
-                        Id = Convert.ToInt64(row[0]),
-                        ProdajnaJedinicaId = Convert.ToInt64(row[1]),
-                        Pocetak = Convert.ToDateTime(row[2]),
-                        Kraj = Convert.ToDateTime(row[3]),
-                        BrojSmene = row[4] != null ? Convert.ToInt32(row[4]) : (int?)null,
-                        ZaposleniIme = row[5]?.ToString() ?? "",
-                        ZaposleniPrezime = row[6]?.ToString() ?? "",
-                        ProdajnaJedinicaNaziv = row[7]?.ToString() ?? "",
-                        SmenaNaziv = row[4] == null ? "Nije dodeljena" : 
-                                   Convert.ToInt32(row[4]) == 1 ? "Prva smena" :
-                                   Convert.ToInt32(row[4]) == 2 ? "Druga smena" : "Treća smena"
-                    };
-                    rasporedList.Add(raspored);
-                }
-                
-                return rasporedList;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            using var s = DataLayer.GetSession();
+
+            var data =
+                (from rr in s.Query<RasporedRada>()
+                 where rr.ProdajnaJedinica.Id == prodajnaJedinicaId
+                 from z in s.Query<Zaposleni>()
+                             .Where(z => z.Id == rr.Zaposleni.Id)
+                             .DefaultIfEmpty()
+                 from pj in s.Query<ProdajnaJedinica>()
+                             .Where(pj => pj.Id == rr.ProdajnaJedinica.Id)
+                             .DefaultIfEmpty()
+                 select new RasporedRadaBasic
+                 {
+                     Id = rr.Zaposleni.Id,
+                     ProdajnaJedinicaId = rr.ProdajnaJedinica.Id,
+                     Pocetak = rr.Pocetak,
+                     Kraj = rr.Kraj,
+                     BrojSmene = rr.BrojSmene,
+
+                     ZaposleniIme = z != null ? z.Ime : string.Empty,
+                     ZaposleniPrezime = z != null ? z.Prezime : string.Empty,
+                     ProdajnaJedinicaNaziv = pj != null ? pj.Naziv : string.Empty,
+
+                     SmenaNaziv =
+                         rr.BrojSmene == null ? "Nije dodeljena" :
+                         rr.BrojSmene == 1 ? "Prva smena" :
+                         rr.BrojSmene == 2 ? "Druga smena" : "Treća smena"
+                 })
+                .ToList();
+
+            return data;
         }
 
         public static IList<RasporedRadaBasic> VratiSveRasporedeRada()
         {
-            try
-            {
-                using var s = DataLayer.GetSession();
-                
-                // Privremeno rešenje - direktan SQL upit dok se ne restaruje aplikacija
-                var sql = @"
-                    SELECT rr.m_br, rr.prodajna_jedinica_id, rr.pocetak, rr.kraj, rr.broj_smene,
-                           z.ime, z.prezime, pj.naziv
-                    FROM Raspored_rada rr
-                    LEFT JOIN Zaposleni z ON rr.m_br = z.m_br
-                    LEFT JOIN Prodajna_Jedinica pj ON rr.prodajna_jedinica_id = pj.id
-                    ORDER BY rr.pocetak";
-                
-                var query = s.CreateSQLQuery(sql);
-                var results = query.List();
-                var rasporedList = new List<RasporedRadaBasic>();
-                
-                foreach (object[] row in results)
-                {
-                    var raspored = new RasporedRadaBasic
-                    {
-                        Id = Convert.ToInt64(row[0]),
-                        ProdajnaJedinicaId = Convert.ToInt64(row[1]),
-                        Pocetak = Convert.ToDateTime(row[2]),
-                        Kraj = Convert.ToDateTime(row[3]),
-                        BrojSmene = row[4] != null ? Convert.ToInt32(row[4]) : (int?)null,
-                        ZaposleniIme = row[5]?.ToString() ?? "",
-                        ZaposleniPrezime = row[6]?.ToString() ?? "",
-                        ProdajnaJedinicaNaziv = row[7]?.ToString() ?? "",
-                        SmenaNaziv = row[4] == null ? "Nije dodeljena" : 
-                                   Convert.ToInt32(row[4]) == 1 ? "Prva smena" :
-                                   Convert.ToInt32(row[4]) == 2 ? "Druga smena" : "Treća smena"
-                    };
-                    rasporedList.Add(raspored);
-                }
-                
-                return rasporedList;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            using var s = DataLayer.GetSession();
+
+            var data =
+                (from rr in s.Query<RasporedRada>()
+                 from z in s.Query<Zaposleni>()
+                            .Where(z => z.Id == rr.Zaposleni.Id)
+                            .DefaultIfEmpty()
+                 from pj in s.Query<ProdajnaJedinica>()
+                            .Where(pj => pj.Id == rr.ProdajnaJedinica.Id)
+                            .DefaultIfEmpty()
+                 orderby rr.Pocetak
+                 select new RasporedRadaBasic
+                 {
+                     Id = rr.Zaposleni.Id,
+                     ProdajnaJedinicaId = rr.ProdajnaJedinica.Id,
+                     Pocetak = rr.Pocetak,
+                     Kraj = rr.Kraj,
+                     BrojSmene = rr.BrojSmene,
+
+                     ZaposleniIme = z != null ? z.Ime : string.Empty,
+                     ZaposleniPrezime = z != null ? z.Prezime : string.Empty,
+                     ProdajnaJedinicaNaziv = pj != null ? pj.Naziv : string.Empty,
+
+                     SmenaNaziv =
+                         rr.BrojSmene == null ? "Nije dodeljena" :
+                         rr.BrojSmene == 1 ? "Prva smena" :
+                         rr.BrojSmene == 2 ? "Druga smena" : "Treća smena"
+                 }).ToList();
+
+            return data;
         }
+
 
         public static void ObrisiRasporedRada(long mbr, long prodajnaJedinicaId, DateTime pocetak)
         {
@@ -887,10 +863,10 @@ namespace FarmacyLibrary
             {
                 using var s = DataLayer.GetSession();
                 var raspored = s.Query<RasporedRada>()
-                    .FirstOrDefault(rr => rr.Zaposleni.Id == mbr 
-                                       && rr.ProdajnaJedinica.Id == prodajnaJedinicaId 
+                    .FirstOrDefault(rr => rr.Zaposleni.Id == mbr
+                                       && rr.ProdajnaJedinica.Id == prodajnaJedinicaId
                                        && rr.Pocetak == pocetak);
-                
+
                 if (raspored != null)
                 {
                     s.Delete(raspored);
@@ -904,5 +880,5 @@ namespace FarmacyLibrary
         }
 
     }
-  
+
 }

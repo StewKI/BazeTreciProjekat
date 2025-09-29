@@ -4,18 +4,18 @@
 GET {{hostname}}/RasporedRada
 
 ### Get raspored rada for zaposleni
-GET {{hostname}}/RasporedRada/zaposleni/101
+GET {{hostname}}/RasporedRada/zaposleni/1
 
 ### Get raspored rada by mbr
-GET {{hostname}}/RasporedRada/101
+GET {{hostname}}/RasporedRada/1
 
 ### Create raspored rada
 POST {{hostname}}/RasporedRada
 Content-Type: application/json
 
 {
-  "mBr": 101,
-  "prodajnaJedinicaId": 1,
+  "idZaposlenog": 1,
+  "prodajnaJedinicaId": 109,
   "pocetak": "2023-01-01T08:00:00",
   "kraj": "2023-01-01T16:00:00",
   "brojSmene": 1,

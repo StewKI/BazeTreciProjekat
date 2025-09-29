@@ -14,7 +14,8 @@ namespace WebAPI.Controllers
         {
             try
             {
-                return new JsonResult(DTOManagerProdajneJedinice.VratiApotekeSaLab());
+                var dto = DTOManagerProdajneJedinice.VratiApotekeSaLab();
+                return Ok(dto);
             }
             catch (Exception ex)
             {
@@ -28,9 +29,9 @@ namespace WebAPI.Controllers
             try
             {
                 var apoteka = DTOManagerProdajneJedinice.VratiProdajnuJedinicuTip(id);
-                if (apoteka == null || !(apoteka is ApotekaSaLab))
+                if (apoteka == null || !(apoteka is ApotekaSaLabBasic))
                 {
-                    return NotFound();
+                    return BadRequest($"Apoteka sa laboratorijom sa ID {id} nije pronađena.");
                 }
                 return new JsonResult(apoteka);
             }

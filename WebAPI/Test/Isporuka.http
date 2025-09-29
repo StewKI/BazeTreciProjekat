@@ -5,8 +5,8 @@ POST {{hostname}}/Isporuka
 Content-Type: application/json
 
 {
-  "distributerId": 1,
-  "prodajnaJedinicaId": 1,
+  "distributerId": 800,
+  "prodajnaJedinicaId": 100,
   "datum": "2023-01-01T00:00:00",
   "magacionerMbr": 1,
   "stavke": [

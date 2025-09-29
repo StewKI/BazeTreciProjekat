@@ -139,7 +139,7 @@ namespace WebAPI.Controllers
                 var prodaja = DTOManagerIsporukeZalihe.VratiProdaju(id);
                 if (prodaja == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Prodaja sa ID {id} nije pronađena.");
                 }
                 return new JsonResult(prodaja);
             }

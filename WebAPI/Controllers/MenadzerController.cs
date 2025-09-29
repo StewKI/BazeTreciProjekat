@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var menadzer = DTOManagerZaposleni.VratiMenadzera(id);
                 if (menadzer == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Menadžer sa ID {id} nije pronađen.");
                 }
                 return new JsonResult(menadzer);
             }

@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
                 var zaposleni = DTOManagerZaposleni.VratiZaposlenog(id);
                 if (zaposleni == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Zaposleni sa ID {id} nije pronađen.");
                 }
                 return new JsonResult(zaposleni);
             }

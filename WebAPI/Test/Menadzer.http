@@ -4,10 +4,10 @@
 GET {{hostname}}/Menadzer
 
 ### Get menadzer by id
-GET {{hostname}}/Menadzer/1
+GET {{hostname}}/Menadzer/3
 
 ### Get menadzeri for apoteka
-GET {{hostname}}/Menadzer/apoteka/1
+GET {{hostname}}/Menadzer/apoteka/100
 
 ### Create menadzer
 POST {{hostname}}/Menadzer
@@ -16,6 +16,7 @@ Content-Type: application/json
 {
   "ime": "Novi",
   "prezime": "Menadzer",
+  "MatBr": "1234567890123",
   "datumRodj": "1980-01-01T00:00:00",
   "adresa": "Adresa 1",
   "telefon": "123456",
@@ -27,9 +28,10 @@ PUT {{hostname}}/Menadzer
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 167,
   "ime": "Izmenjen",
   "prezime": "Menadzer",
+  "MatBr": "1234567890123",
   "datumRodj": "1980-01-01T00:00:00",
   "adresa": "Nova Adresa 2",
   "telefon": "654321",

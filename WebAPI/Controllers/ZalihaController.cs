@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
                 var zaliha = DTOManagerIsporukeZalihe.VratiZalihu(prodajnaJedinicaId, pakovanjeId);
                 if (zaliha == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Zaliha za prodajnu jedinicu {prodajnaJedinicaId} i pakovanje {pakovanjeId} nije pronađena.");
                 }
                 return new JsonResult(zaliha);
             }

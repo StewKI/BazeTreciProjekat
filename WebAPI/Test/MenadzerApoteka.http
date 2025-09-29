@@ -5,8 +5,8 @@ POST {{hostname}}/MenadzerApoteka
 Content-Type: application/json
 
 {
-  "idMenadzera": 1,
-  "prodajnaJedinicaId": 1,
+  "idMenadzera": 3,
+  "prodajnaJedinicaId": 109,
   "datumKontrole": "2024-01-01T10:00:00"
 }
 
@@ -15,14 +15,14 @@ PUT {{hostname}}/MenadzerApoteka
 Content-Type: application/json
 
 {
-  "idMenadzera": 1,
-  "prodajnaJedinicaId": 1,
+  "idMenadzera": 3,
+  "prodajnaJedinicaId": 109,
   "od": "2023-01-01T00:00:00",
   "do": "2024-01-01T00:00:00"
 }
 
 ### Get apoteke for menadzer by id
-GET {{hostname}}/MenadzerApoteka/menadzer/1
+GET {{hostname}}/MenadzerApoteka/menadzer/3
 
 ### Delete menadzer from apoteka
-DELETE {{hostname}}/MenadzerApoteka/1/menadzer/1
+DELETE {{hostname}}/MenadzerApoteka/109/menadzer/3

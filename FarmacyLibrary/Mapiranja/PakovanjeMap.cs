@@ -19,7 +19,6 @@ namespace FarmacyLibrary.Mapiranja
             Map(x => x.Ambalaza, "ambalaza");
             Map(x => x.NacinCuvanja, "nacin_cuvanja");
             Map(x => x.PreporuceniRokDana, "preporuceni_rok_dana").Nullable();
-            // UNIQUE(lek_id, oblik_id, velicina_pakovanja) – nije obavezno deklarisati i u NH
         }
     }
 }

@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var grupa = DTOManagerLek.VratiPrimarnuGrupu(id);
                 if (grupa == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Primarna grupa sa ID {id} nije pronađena.");
                 }
                 return new JsonResult(grupa);
             }

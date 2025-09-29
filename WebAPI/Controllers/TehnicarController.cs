@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
                 var tehnicar = DTOManagerZaposleni.VratiTehnicara(mbr);
                 if (tehnicar == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Tehničar sa MBR {mbr} nije pronađen.");
                 }
                 return new JsonResult(tehnicar);
             }

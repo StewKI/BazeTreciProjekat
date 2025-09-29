@@ -4,7 +4,7 @@
 GET {{hostname}}/PrimarnaGrupa
 
 ### Get primarna grupa by id
-GET {{hostname}}/PrimarnaGrupa/6
+GET {{hostname}}/PrimarnaGrupa/8
 
 ### Create primarna grupa
 POST {{hostname}}/PrimarnaGrupa
@@ -19,7 +19,7 @@ PUT {{hostname}}/PrimarnaGrupa
 Content-Type: application/json
 
 {
-  "id": 6,
+  "id": 8,
   "naziv": "Izmenjena Primarna Grupa"
 }
 

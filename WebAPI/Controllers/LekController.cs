@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var lek = DTOManagerLek.VratiLek(id);
                 if (lek == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Lek sa ID {id} nije pronađen.");
                 }
                 return new JsonResult(lek);
             }

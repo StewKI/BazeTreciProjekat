@@ -55,7 +55,7 @@ namespace WebAPI.Controllers
                 var raspored = DTOManagerZaposleni.VratiRasporedRada(mbr);
                 if (raspored == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Raspored rada za zaposlenog sa MBR {mbr} nije pronađen.");
                 }
                 return new JsonResult(raspored);
             }

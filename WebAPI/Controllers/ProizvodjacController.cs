@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var proizvodjac = DTOManagerIsporukeZalihe.VratiProizvodjaca(id);
                 if (proizvodjac == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Proizvođač sa ID {id} nije pronađen.");
                 }
                 return new JsonResult(proizvodjac);
             }

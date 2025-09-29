@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FarmacyLibrary.Entiteti;
 
 namespace FarmacyLibrary
 {
@@ -36,7 +35,6 @@ namespace FarmacyLibrary
                 
                 throw new Exception(ex.Message);
             }
-            return 0;
         }
 
         public static long DodajPrimarnuGrupu(PrimarnaGrupaBasic dto)
@@ -55,7 +53,6 @@ namespace FarmacyLibrary
                 
                 throw new Exception(ex.Message);
             }
-            return 0;
         }
 
         public static long DodajSekundarnuKategoriju(SekundarnaKategorijaBasic dto)
@@ -72,7 +69,6 @@ namespace FarmacyLibrary
             catch (Exception ex) {
                 throw new Exception(ex.Message);
             }
-            return 0;
         }
 
         public static long DodajLek(LekBasic dto)
@@ -80,13 +76,23 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
+                
+                // Validacija stranih ključeva
+                var proizvodjac = s.Get<Proizvodjac>(dto.ProizvodjacId);
+                if (proizvodjac == null)
+                    throw new Exception($"Proizvođač sa ID {dto.ProizvodjacId} nije pronađen.");
+                
+                var primarnaGrupa = s.Get<PrimarnaGrupa>(dto.PrimarnaGrupaId);
+                if (primarnaGrupa == null)
+                    throw new Exception($"Primarna grupa sa ID {dto.PrimarnaGrupaId} nije pronađena.");
+                
                 var lek = new Lek
                 {
                     HemijskiNaziv = dto.HemijskiNaziv,
                     KomercijalniNaziv = dto.KomercijalniNaziv,
                     Dejstvo = dto.Dejstvo,
-                    Proizvodjac = s.Load<Proizvodjac>(dto.ProizvodjacId),
-                    PrimarnaGrupa = s.Load<PrimarnaGrupa>(dto.PrimarnaGrupaId)
+                    Proizvodjac = proizvodjac,
+                    PrimarnaGrupa = primarnaGrupa
                 };
                 s.Save(lek);
 
@@ -95,7 +101,10 @@ namespace FarmacyLibrary
                 {
                     foreach (var kid in dto.SekundarneKategorijeIds.Distinct())
                     {
-                        var kat = s.Load<SekundarnaKategorija>(kid);
+                        var kat = s.Get<SekundarnaKategorija>(kid);
+                        if (kat == null)
+                            throw new Exception($"Sekundarna kategorija sa ID {kid} nije pronađena.");
+                        
                         var ls = new LekSekundarna
                         {
                             Lek = lek,
@@ -114,7 +123,6 @@ namespace FarmacyLibrary
                 throw new Exception(ex.Message);
 
             }
-            return 0;
         }
 
         public static long DodajOblik(OblikBasic dto)
@@ -132,7 +140,6 @@ namespace FarmacyLibrary
             {
                 throw new Exception(ex.Message);
             }
-            return 0;
         }
 
         public static long DodajPakovanje(PakovanjeBasic dto)
@@ -140,43 +147,62 @@ namespace FarmacyLibrary
             try
             {
                 using var s = DataLayer.GetSession();
+                
+                // Validacija stranih ključeva
+                var lek = s.Get<Lek>(dto.LekId);
+                if (lek == null)
+                    throw new Exception($"Lek sa ID {dto.LekId} nije pronađen.");
+                
+                var oblik = s.Get<Oblik>(dto.OblikId);
+                if (oblik == null)
+                    throw new Exception($"Oblik leka sa ID {dto.OblikId} nije pronađen.");
+                
                 var p = new Pakovanje
                 {
-                    Lek = s.Load<Lek>(dto.LekId),
-                    Oblik = s.Load<Oblik>(dto.OblikId),
+                    Lek = lek,
+                    Oblik = oblik,
                     VelicinaPakovanja = dto.VelicinaPakovanja,
                     KolicinaAktivne = dto.KolicinaAktivne,
                     JedinicaMere = dto.JedinicaMere,
                     Ambalaza = dto.Ambalaza,
                     NacinCuvanja = dto.NacinCuvanja,
-                    PreporuceniRokDana = dto.PreporuceniRokDana                    
+                    PreporuceniRokDana = dto.PreporuceniRokDana
                 };
                 s.Save(p);
                 s.Flush();
                 dto.Id = p.Id;
                 return p.Id;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw new Exception(ex.Message);
             }
-            return 0;
         }
 
-        public static IList<Pakovanje> VratiSvaPakovanja()
+        public static IList<PakovanjeBasic> VratiSvaPakovanja()
         {
-            var list = new List<Pakovanje>();
+            var list = new List<PakovanjeBasic>();
             try
             {
                 using var s = DataLayer.GetSession();
                 var pakovanja = s.Query<Pakovanje>().ToList();
 
-                // Force loading of related entities within the session
                 foreach (var p in pakovanja)
                 {
-                    // Access the properties to force loading
-                    var lekNaziv = p.Lek?.KomercijalniNaziv;
-                    var oblikNaziv = p.Oblik?.Naziv;
-                    list.Add(p);
+                    list.Add(
+                        new PakovanjeBasic
+                        {
+                            Id = p.Id,
+                            LekId = p.Lek.Id,
+                            OblikId = p.Oblik.Id,
+                            VelicinaPakovanja = p.VelicinaPakovanja,
+                            KolicinaAktivne = p.KolicinaAktivne,
+                            JedinicaMere = p.JedinicaMere,
+                            Ambalaza = p.Ambalaza,
+                            NacinCuvanja = p.NacinCuvanja,
+                            PreporuceniRokDana = p.PreporuceniRokDana
+                        }
+                    );
                 }
             }
             catch (Exception ex)

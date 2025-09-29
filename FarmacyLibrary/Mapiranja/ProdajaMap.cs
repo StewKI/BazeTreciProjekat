@@ -15,7 +15,7 @@ namespace FarmacyLibrary.Mapiranja
             References(x => x.ProdajnaJedinica, "prodajna_jedinica_id").Not.Nullable();
 
             Map(x => x.DatumVreme, "datum_vreme")
-                .CustomType<TimestampType>()                           // was "timestamp"
+                .CustomType<TimestampType>()
                 .Not.Nullable();
 
             References(x => x.Blagajnik, "blagajnik_id").Nullable();

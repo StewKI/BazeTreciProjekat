@@ -4,7 +4,7 @@
 GET {{hostname}}/SekundarnaKategorija
 
 ### Get sekundarna kategorija by id
-GET {{hostname}}/SekundarnaKategorija/41
+GET {{hostname}}/SekundarnaKategorija/400
 
 ### Create sekundarna kategorija
 POST {{hostname}}/SekundarnaKategorija

@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var oblik = DTOManagerLek.VratiOblikBasic(id);
                 if (oblik == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Oblik leka sa ID {id} nije pronađen.");
                 }
                 return new JsonResult(oblik);
             }

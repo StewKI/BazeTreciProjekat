@@ -4,14 +4,14 @@
 GET {{hostname}}/Recept
 
 ### Get recept by serijski broj
-GET {{hostname}}/Recept/345643
+GET {{hostname}}/Recept/1234587
 
 ### Create recept
 POST {{hostname}}/Recept
 Content-Type: application/json
 
 {
-  "serijskiBroj": "1234587",
+  "serijskiBroj": "12345123123",
   "sifraLekara": "lekar1",
   "datumIzd": "2023-01-01T00:00:00",
   "status": "CEKANJE",

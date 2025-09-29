@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
                 var recept = DTOManagerIsporukeZalihe.VratiRecept(serijskiBroj);
                 if (recept == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Recept sa serijskim brojem {serijskiBroj} nije pronađen.");
                 }
                 return new JsonResult(recept);
             }

@@ -4,7 +4,7 @@
 GET {{hostname}}/Zaposleni
 
 ### Get employee by ID
-GET {{hostname}}/Zaposleni/129
+GET {{hostname}}/Zaposleni/168
 
 ### Create a new employee
 POST {{hostname}}/Zaposleni
@@ -25,7 +25,7 @@ PUT {{hostname}}/Zaposleni
 Content-Type: application/json
 
 {
-  "Id": 129,
+  "Id": 168,
   "Ime": "Pera",
   "Prezime": "Peric",
   "DatumRodj": "1980-01-01T00:00:00",

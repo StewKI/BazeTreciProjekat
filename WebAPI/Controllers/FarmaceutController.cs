@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var farmaceut = DTOManagerZaposleni.VratiFarmaceuta(id);
                 if (farmaceut == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Farmaceut sa ID {id} nije pronađen.");
                 }
                 return new JsonResult(farmaceut);
             }

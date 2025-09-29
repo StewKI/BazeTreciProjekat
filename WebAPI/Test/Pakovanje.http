@@ -11,8 +11,8 @@ POST {{hostname}}/Pakovanje
 Content-Type: application/json
 
 {
-  "lekId": 1,
-  "oblikId": 1,
+  "lekId": 18,
+  "oblikId": 62,
   "velicinaPakovanja": "100ml",
   "kolicinaAktivne": 50.5,
   "jedinicaMere": "mg",
@@ -26,9 +26,9 @@ PUT {{hostname}}/Pakovanje
 Content-Type: application/json
 
 {
-  "id": 1,
-  "lekId": 1,
-  "oblikId": 1,
+  "id": 7,
+  "lekId": 18,
+  "oblikId": 62,
   "velicinaPakovanja": "150ml",
   "kolicinaAktivne": 75.0,
   "jedinicaMere": "mg",

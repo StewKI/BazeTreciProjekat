@@ -4,7 +4,7 @@
 GET {{hostname}}/Proizvodjac
 
 ### Get proizvodjac by id
-GET {{hostname}}/Proizvodjac/4
+GET {{hostname}}/Proizvodjac/2
 
 ### Create proizvodjac
 POST {{hostname}}/Proizvodjac
@@ -22,7 +22,7 @@ PUT {{hostname}}/Proizvodjac
 Content-Type: application/json
 
 {
-  "id": 4,
+  "id": 5,
   "naziv": "Izmenjen Proizvodjac",
   "zemlja": "Nemacka",
   "telefon": "333444",

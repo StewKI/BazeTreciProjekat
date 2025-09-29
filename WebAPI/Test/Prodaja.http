@@ -53,9 +53,6 @@ GET {{hostname}}/Prodaja/Pakovanja/4
 ### Get svi blagajnici
 GET {{hostname}}/Prodaja/Blagajnici
 
-### Get svi recepti
-GET {{hostname}}/Prodaja/Recepti
-
 ### Get sve prodaje
 GET {{hostname}}/Prodaja
 

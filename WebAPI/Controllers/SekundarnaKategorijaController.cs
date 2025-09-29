@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
                 var kategorija = DTOManagerIsporukeZalihe.VratiSekundarnuGrupu(id);
                 if (kategorija == null)
                 {
-                    return NotFound();
+                    return BadRequest($"Sekundarna kategorija sa ID {id} nije pronađena.");
                 }
                 return new JsonResult(kategorija);
             }

@@ -18,7 +18,7 @@ Content-Type: application/json
   "pakovanjeId": 1,
   "kolicina": 104,
   "datumPoslednjeIsporuke": "2023-01-01T00:00:00",
-  "odgovorniMagacionerId": 101
+  "odgovorniMagacionerId": 3
 }
 
 ### Update zaliha

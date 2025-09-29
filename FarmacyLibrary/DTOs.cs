@@ -128,8 +128,8 @@
         public int? PreporuceniRokDana { get; set; }
         
         // Dodatne informacije za prikaz
-        public string LekNaziv { get; set; }
-        public string OblikNaziv { get; set; }
+        public string? LekNaziv { get; set; }
+        public string? OblikNaziv { get; set; }
         public string PrikazniNaziv => $"{LekNaziv} - {VelicinaPakovanja} ({KolicinaAktivne} {JedinicaMere})";
     }
 
@@ -173,8 +173,8 @@
         public long ProdajnaJedinicaId { get; set; }
         public DateTime DatumVreme { get; set; }
         public long? BlagajnikId { get; set; }
-        public string ProdajnaJedinicaNaziv { get; set; }
-        public string BlagajnikIme { get; set; }
+        public string? ProdajnaJedinicaNaziv { get; set; }
+        public string? BlagajnikIme { get; set; }
         public decimal UkupnaVrednost { get; set; }
         public int BrojStavki { get; set; }
     }
@@ -211,6 +211,7 @@
         public virtual DateTime Pocetak { get; set; }
         public virtual DateTime Kraj { get; set; }
         public virtual int? BrojSmene { get; set; }
+        public virtual long IdZaposlenog { get; set; }
         public virtual string ZaposleniIme { get; set; } = default!;
         public virtual string ZaposleniPrezime { get; set; } = default!;
         public virtual string ProdajnaJedinicaNaziv { get; set; } = default!;

@@ -10,7 +10,7 @@ Content-Type: application/json
   "broj": "70",
   "postanskiBroj": "11000",
   "mesto": "Beograd",
-  "odgovorniFarmaceutMbr": 1,
+  "odgovorniFarmaceutId": 1,
   "tipSpecijalizacije": "Za dijabeticare"
 }
 
@@ -19,12 +19,12 @@ PUT {{hostname}}/SpecijalizovanaApoteka
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 10,
   "naziv": "Izmenjena Specijalizovana Apoteka",
   "ulica": "Ulica 8",
   "broj": "80",
   "postanskiBroj": "11000",
   "mesto": "Beograd",
-  "odgovorniFarmaceutMbr": 1,
+  "odgovorniFarmaceutId": 1,
   "tipSpecijalizacije": "Za srcane bolesnike"
 }

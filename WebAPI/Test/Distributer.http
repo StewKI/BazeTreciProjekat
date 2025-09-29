@@ -4,7 +4,7 @@
 GET {{hostname}}/Distributer
 
 ### Get distributer by id
-GET {{hostname}}/Distributer/4
+GET {{hostname}}/Distributer/800
 
 ### Create distributer
 POST {{hostname}}/Distributer
@@ -20,10 +20,10 @@ PUT {{hostname}}/Distributer
 Content-Type: application/json
 
 {
-  "id": 4,
+  "id": 1,
   "naziv": "Izmenjen Distributer",
   "kontakt": "Novi Kontakt Info"
 }
 
 ### Delete distributer
-DELETE {{hostname}}/Distributer/4
+DELETE {{hostname}}/Distributer/1
